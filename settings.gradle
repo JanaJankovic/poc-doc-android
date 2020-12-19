@@ -1,2 +1,3 @@
+include ':datalib'
 include ':app'
 rootProject.name = "Pocket-Doctor"

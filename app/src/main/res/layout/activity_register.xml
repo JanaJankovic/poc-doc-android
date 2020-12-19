@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccentDark"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -160,6 +160,7 @@
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/transparent_button_style"
             android:shadowColor="#00FFFFFF"
             android:stateListAnimator="@null"
