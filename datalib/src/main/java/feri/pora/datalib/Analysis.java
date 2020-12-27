@@ -7,6 +7,10 @@ public class Analysis {
     private String filePath;
     private ArrayList<String> possibleIllnesses;
 
+    public Analysis() {
+        possibleIllnesses = new ArrayList<>();
+    }
+
     public Analysis(String filePath) {
         this.filePath = filePath;
     }
