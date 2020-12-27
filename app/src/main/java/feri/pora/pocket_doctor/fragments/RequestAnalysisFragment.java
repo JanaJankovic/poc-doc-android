@@ -44,8 +44,6 @@ public class RequestAnalysisFragment extends Fragment {
     private static final int REQUEST_GALLERY = 3;
 
     String currentPhotoPath;
-    Analysis analysis;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +54,6 @@ public class RequestAnalysisFragment extends Fragment {
                 R.layout.fragment_request_analysis, null);
 
         bindGUI(rootView);
-
-        analysis = new Analysis();
         
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,27 +167,27 @@ public class RequestAnalysisFragment extends Fragment {
         if(requestCode == REQUEST_CAMERA_OPEN) {
             if (resultCode == Activity.RESULT_OK) {
                 File image = new File(currentPhotoPath);
-                analysis.setFilePath(Uri.fromFile(image).getPath());
-                /*plant.setPicturePath();
-                Log.i(TAG, plant.getPicturePath());
 
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(image);
-                mediaScanIntent.setData(contentUri);
-                getActivity().sendBroadcast(mediaScanIntent);
+                Bundle bundle = new Bundle();
+                bundle.putString("filepath", Uri.fromFile(image).getPath());
 
-                Picasso.with( getActivity().getBaseContext())
-                        .load(image).fit().centerCrop().into(imageView);*/
+                SendRequestFragment sendRequestFragment = new SendRequestFragment();
+                sendRequestFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.nav_host_fragment, sendRequestFragment).commit();
+
             }
         } else if (requestCode == REQUEST_GALLERY) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri contentUri = data.getData();
-                analysis.setFilePath(getPathFromURI(contentUri));
-                /*plant.setPicturePath();
+                Bundle bundle = new Bundle();
+                bundle.putString("filepath", getPathFromURI(contentUri));
 
-                File image = new File(getPathFromURI(contentUri));
-                Picasso.with( getActivity().getBaseContext())
-                        .load(image).fit().centerCrop().into(imageView);*/
+                SendRequestFragment sendRequestFragment = new SendRequestFragment();
+                sendRequestFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.nav_host_fragment, sendRequestFragment).commit();
+
             }
         }
     }
