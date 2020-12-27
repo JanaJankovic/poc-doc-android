@@ -1,17 +1,41 @@
 package feri.pora.datalib;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.print.Doc;
+
 public class User {
+    private String privateKey;
+    private String publicKey;
     private String medicalNumber;
     private String fullName;
     private String password;
     private String phone;
     private String location;
+    private ArrayList<Doctor> doctorList;
+    private ArrayList<Diagnosis> diagnosisList;
 
-    public User(String medicalNumber, String fullName, String password, String phone) {
+    public User(String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
         this.medicalNumber = medicalNumber;
         this.fullName = fullName;
         this.password = password;
         this.phone = phone;
+
+        this.privateKey = privateKey;
+        this.publicKey = publicKey;
+
+        doctorList = new ArrayList<Doctor>();
+        diagnosisList = new ArrayList<Diagnosis>();
+
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
     }
 
     public String getMedicalNumber() {
@@ -52,5 +76,15 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void addDoctorToList(Doctor d) {
+        if(! doctorList.contains(d) )
+            doctorList.add(d);
+    }
+
+    public void removeDoctorFromList(Doctor d) {
+        if(doctorList.contains(d))
+            doctorList.remove(d);
     }
 }
