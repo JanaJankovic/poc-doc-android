@@ -82,8 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
             if (passwordText.getText().toString().length() < 8) {
                 Toast.makeText(getBaseContext(), "Password is too short", Toast.LENGTH_LONG).show();
             } else {
-                user = new User(medicalNumberText.getText().toString(), fullnameText.getText().toString()
-                        , passwordText.getText().toString(), phoneText.getText().toString());
+               // user = new User(medicalNumberText.getText().toString(), fullnameText.getText().toString()
+                    //    , passwordText.getText().toString(), phoneText.getText().toString());
 
                 //API REQUEST
 

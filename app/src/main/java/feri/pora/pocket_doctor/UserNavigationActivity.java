@@ -1,6 +1,8 @@
 package feri.pora.pocket_doctor;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -8,6 +10,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,32 +21,80 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import feri.pora.pocket_doctor.fragments.HomeFragment;
+import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
+import feri.pora.pocket_doctor.fragments.RequestAnalysisFragment;
+
 public class UserNavigationActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    public static Toolbar toolbar;
+    private DrawerLayout drawer;
+    public static NavigationView navigationView;
+    private  NavController navController;
+
+    private ApplicationState state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bindGUI();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary, this.getTheme()));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home :
+                        toolbar.setTitle(R.string.menu_home);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new HomeFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_request_analysis:
+                        toolbar.setTitle("Request analysis");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new RequestAnalysisFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_list_analysis :
+                        toolbar.setTitle("List analysis");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new ListAnalysisFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                }
+                return true;
+            }
+        });
+
+    }
+
+    public void bindGUI() {
         setContentView(R.layout.activity_user_navigation);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_request_analysis, R.id.nav_list_analysis)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        state = (ApplicationState)getApplication();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.user_navigation, menu);
         return true;
     }
