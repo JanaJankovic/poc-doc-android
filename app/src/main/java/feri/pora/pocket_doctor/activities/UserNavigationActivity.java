@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,6 +35,8 @@ public class UserNavigationActivity extends AppCompatActivity {
     private DrawerLayout drawer;
     public static NavigationView navigationView;
     private  NavController navController;
+    private TextView textViewUserFullname;
+    private TextView textViewUserMedicalNumber;
 
     private ApplicationState state;
 
@@ -47,6 +50,9 @@ public class UserNavigationActivity extends AppCompatActivity {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         }
+
+        textViewUserFullname.setText(ApplicationState.loadLoggedUser().getFullName());
+        textViewUserMedicalNumber.setText(ApplicationState.loadLoggedUser().getMedicalNumber());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -91,6 +97,8 @@ public class UserNavigationActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        textViewUserFullname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userFullName);
+        textViewUserMedicalNumber = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userMedicalNumber);
 
         state = (ApplicationState)getApplication();
     }
