@@ -14,6 +14,12 @@ public class User {
     private ArrayList<Doctor> doctorList;
     private ArrayList<Diagnosis> diagnosisList;
 
+    public User(){
+        doctorList = new ArrayList<Doctor>();
+        diagnosisList = new ArrayList<Diagnosis>();
+    }
+
+
     public User(String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
         this.medicalNumber = medicalNumber;
         this.fullName = fullName;

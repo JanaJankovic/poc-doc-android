@@ -10,9 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+
+import feri.pora.datalib.Response;
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.network.NetworkUtil;
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -25,12 +36,15 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText phoneText;
     private EditText passwordText;
 
+    private CompositeSubscription subscription;
+
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        subscription = new CompositeSubscription();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccentDark, this.getTheme()));
@@ -82,19 +96,58 @@ public class RegisterActivity extends AppCompatActivity {
             if (passwordText.getText().toString().length() < 8) {
                 Toast.makeText(getBaseContext(), "Password is too short", Toast.LENGTH_LONG).show();
             } else {
-               // user = new User(medicalNumberText.getText().toString(), fullnameText.getText().toString()
-                    //    , passwordText.getText().toString(), phoneText.getText().toString());
+               user = new User();
+               user.setFullName(fullnameText.getText().toString());
+               user.setMedicalNumber(medicalNumberText.getText().toString());
+               user.setPhone(phoneText.getText().toString());
+               user.setPassword(passwordText.getText().toString());
+               user.setLocation("");
 
                 //API REQUEST
+                registerProcess(user);
 
-                ApplicationState.saveLoggedUser(user);
-                Intent data = new Intent();
-                setResult(RESULT_OK, data);
-                finish();
             }
         } else {
             Toast.makeText(getBaseContext(), "All fields are required", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void registerProcess(User user) {
+
+        subscription.add(NetworkUtil.getRetrofit().register(user)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse, this::handleError));
+    }
+
+    private void handleResponse(User user) {
+        this.user = user;
+    }
+
+    private void handleError(Throwable error) {
+
+        if (error instanceof HttpException) {
+
+            Gson gson = ApplicationState.getGson();
+
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                Toast.makeText(getBaseContext(), response.getData(),  Toast.LENGTH_LONG).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getBaseContext(), "Network error!",  Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        subscription.unsubscribe();
     }
 
 }

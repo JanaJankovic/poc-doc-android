@@ -11,10 +11,10 @@ import rx.Observable;
 
 public interface RetrofitInterface {
     @POST("patients/")
-    Observable<Response> register(@Body User user);
+    Observable<User> register(@Body User user);
 
     @POST("patients/login")
-    Observable<Response> login();
+    Observable<User> login();
 
     @GET("patients/{id}")
     Observable<User> getProfile(@Path("id") String id);
