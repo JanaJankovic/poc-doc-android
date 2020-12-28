@@ -1,18 +1,15 @@
 package feri.pora.pocket_doctor.fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -21,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import feri.pora.pocket_doctor.R;
-import feri.pora.pocket_doctor.UserNavigationActivity;
+import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 
 public class SendRequestFragment extends Fragment {
 
@@ -42,6 +39,8 @@ public class SendRequestFragment extends Fragment {
 
         bindGUI(rootView);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setPictureBackground(rootView);
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {

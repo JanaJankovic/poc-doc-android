@@ -1,4 +1,4 @@
-package feri.pora.pocket_doctor;
+package feri.pora.pocket_doctor.activities;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -21,9 +21,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
 import feri.pora.pocket_doctor.fragments.RequestAnalysisFragment;
+import feri.pora.pocket_doctor.ApplicationState;
 
 public class UserNavigationActivity extends AppCompatActivity {
 
