@@ -1,5 +1,4 @@
 package feri.pora.datalib;
-
 import java.util.ArrayList;
 
 public class User {
@@ -98,5 +97,18 @@ public class User {
     public void removeDoctorFromList(Doctor d) {
         if(doctorList.contains(d))
             doctorList.remove(d);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "privateKey='" + privateKey + '\'' +
+                ", id='" + id + '\'' +
+                ", medicalNumber='" + medicalNumber + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

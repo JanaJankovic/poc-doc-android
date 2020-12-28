@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
@@ -45,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         subscription = new CompositeSubscription();
+        user = new User();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccentDark, this.getTheme()));
@@ -96,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
             if (passwordText.getText().toString().length() < 8) {
                 Toast.makeText(getBaseContext(), "Password is too short", Toast.LENGTH_LONG).show();
             } else {
-               user = new User();
                user.setFullName(fullnameText.getText().toString());
                user.setMedicalNumber(medicalNumberText.getText().toString());
                user.setPhone(phoneText.getText().toString());
@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                user.setLocation("");
 
                 //API REQUEST
-                registerProcess(user);
+                registerProcess();
 
             }
         } else {
@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void registerProcess(User user) {
+    private void registerProcess() {
 
         subscription.add(NetworkUtil.getRetrofit().register(user)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -121,7 +121,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleResponse(User user) {
-        this.user = user;
+        Log.i("REGISTER", user.toString());
+        Intent data = new Intent();
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     private void handleError(Throwable error) {
@@ -140,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getBaseContext(), "Network error!",  Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), error.getMessage(),  Toast.LENGTH_LONG).show();
         }
     }
 
