@@ -1,13 +1,11 @@
 package feri.pora.datalib;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.print.Doc;
 
 public class User {
     private String privateKey;
     private String publicKey;
+    private String id;
     private String medicalNumber;
     private String fullName;
     private String password;
@@ -28,6 +26,14 @@ public class User {
         doctorList = new ArrayList<Doctor>();
         diagnosisList = new ArrayList<Diagnosis>();
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPrivateKey() {
