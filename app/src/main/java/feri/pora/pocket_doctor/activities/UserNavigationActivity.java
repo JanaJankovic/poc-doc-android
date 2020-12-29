@@ -22,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
@@ -75,6 +76,11 @@ public class UserNavigationActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new ListAnalysisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_logout :
+                       User user = new User();
+                       ApplicationState.saveLoggedUser(user);
+                       finish();
                         break;
                 }
                 return true;
