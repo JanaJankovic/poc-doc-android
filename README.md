@@ -269,6 +269,26 @@
   
     ```
     
+* network
+    * NetworkUtil
+    ```java
+    public static RetrofitInterface getRetrofit(){
+
+        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
+
+        return new Retrofit.Builder()
+                .baseUrl(ApplicationConfig.HOST_IP)
+                .addCallAdapterFactory(rxAdapter)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(RetrofitInterface.class);
+
+    }
+    ```
+
+
+* util
+
+
 * ApplicationState
 ```java
 public static Gson getGson() {...}
