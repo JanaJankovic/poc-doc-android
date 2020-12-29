@@ -1,13 +1,10 @@
 package feri.pora.datalib;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.print.Doc;
 
 public class User {
     private String privateKey;
     private String publicKey;
+    private String id;
     private String medicalNumber;
     private String fullName;
     private String password;
@@ -15,6 +12,12 @@ public class User {
     private String location;
     private ArrayList<Doctor> doctorList;
     private ArrayList<Diagnosis> diagnosisList;
+
+    public User(){
+        doctorList = new ArrayList<Doctor>();
+        diagnosisList = new ArrayList<Diagnosis>();
+    }
+
 
     public User(String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
         this.medicalNumber = medicalNumber;
@@ -28,6 +31,14 @@ public class User {
         doctorList = new ArrayList<Doctor>();
         diagnosisList = new ArrayList<Diagnosis>();
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPrivateKey() {
@@ -86,5 +97,18 @@ public class User {
     public void removeDoctorFromList(Doctor d) {
         if(doctorList.contains(d))
             doctorList.remove(d);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "privateKey='" + privateKey + '\'' +
+                ", id='" + id + '\'' +
+                ", medicalNumber='" + medicalNumber + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

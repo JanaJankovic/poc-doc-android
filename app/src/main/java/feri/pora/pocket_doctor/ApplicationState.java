@@ -31,7 +31,7 @@ public class ApplicationState extends Application {
     }
 
     public static boolean checkLoggedUser(){
-        if (!sharedPreferences.contains(ApplicationConfig.USER_KEY)) {
+        if (sharedPreferences.contains(ApplicationConfig.USER_KEY)) {
             return true;
         }
         return false;
