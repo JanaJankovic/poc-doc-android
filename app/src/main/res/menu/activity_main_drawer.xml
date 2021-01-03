@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_bar_chart"
             android:title="@string/list_of_analysis" />
         <item
+            android:id="@+id/nav_oxymeter"
+            android:icon="@drawable/ic_cardiology"
+            android:title="Pulse measurement" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_baseline_exit_w"
             android:title="Log out" />

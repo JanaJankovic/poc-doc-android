@@ -26,6 +26,7 @@ import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
+import feri.pora.pocket_doctor.fragments.OxymeterFragment;
 import feri.pora.pocket_doctor.fragments.RequestAnalysisFragment;
 import feri.pora.pocket_doctor.ApplicationState;
 
@@ -75,6 +76,12 @@ public class UserNavigationActivity extends AppCompatActivity {
                         toolbar.setTitle("List analysis");
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new ListAnalysisFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_oxymeter :
+                        toolbar.setTitle("Pulse measurement");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_logout :

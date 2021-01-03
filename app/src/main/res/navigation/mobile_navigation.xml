@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_f_request_analysis"
         android:name="feri.pora.pocket_doctor.fragments.RequestAnalysisFragment"
         android:label="Request analysis"
         tools:layout="@layout/fragment_request_analysis" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_f_list_analysis"
         android:name="feri.pora.pocket_doctor.fragments.ListAnalysisFragment"
         android:label="List of analysis"
         tools:layout="@layout/fragment_list_analysis" />
+
+    <fragment
+        android:id="@+id/nav_f_oxymeter"
+        android:name="feri.pora.pocket_doctor.fragments.OxymeterFragment"
+        android:label="Pulse measurement"
+        tools:layout="@layout/fragment_oxymeter" />
 </navigation>
