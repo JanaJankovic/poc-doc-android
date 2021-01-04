@@ -8,6 +8,12 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_medical_handbook"
             android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_active_therapies"
+            android:icon="@drawable/ic_therapy"
+            android:title="Active therapies" />
+
         <item
             android:id="@+id/nav_request_analysis"
             android:icon="@drawable/ic_analytics"
@@ -20,6 +26,12 @@
             android:id="@+id/nav_oxymeter"
             android:icon="@drawable/ic_cardiology"
             android:title="Pulse measurement" />
+
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_chat"
+            android:title="Chat" />
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_baseline_exit_w"

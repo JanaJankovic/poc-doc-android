@@ -24,6 +24,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.fragments.ActiveTherapiesFragment;
+import feri.pora.pocket_doctor.fragments.ChatFragment;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
 import feri.pora.pocket_doctor.fragments.OxymeterFragment;
@@ -82,6 +84,18 @@ public class UserNavigationActivity extends AppCompatActivity {
                         toolbar.setTitle("Pulse measurement");
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_chat :
+                        toolbar.setTitle("Chat");
+                        getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.nav_host_fragment, new ChatFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_active_therapies:
+                        toolbar.setTitle("Active therapies");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new ActiveTherapiesFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_logout :
