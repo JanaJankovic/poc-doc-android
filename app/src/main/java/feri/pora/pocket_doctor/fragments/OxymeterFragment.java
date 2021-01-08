@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 
 public class OxymeterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -19,6 +20,7 @@ public class OxymeterFragment extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_oxymeter, null);
 
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
         return  rootView;
     }
 }
