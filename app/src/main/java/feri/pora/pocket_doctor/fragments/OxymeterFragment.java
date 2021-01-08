@@ -2,13 +2,8 @@ package feri.pora.pocket_doctor.fragments;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +49,10 @@ public class OxymeterFragment extends Fragment {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         pairedDevices = new ArrayList<>();
-        pairedDevices.add(new Device("HC-08", "AS:VF:22:1EDE", "paired"));
 
         bindGUI(rootView);
+
+        scanDevices();
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,13 +109,13 @@ public class OxymeterFragment extends Fragment {
 
     public void scanDevices() {
         Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
-
         if (devices.size() > 0) {
             for (BluetoothDevice device : devices) {
                 Device pairedDevice = new Device(device.getName(), device.getAddress(), "paired");
-                pairedDevices.add(pairedDevice);
-                adapterPairedDevices.notifyDataSetChanged();
-                Log.i("FOUND!!!", device.getName() + " " + pairedDevices.size());
+                if (!Device.checkIfAdded(pairedDevice, pairedDevices)) {
+                    pairedDevices.add(pairedDevice);
+                    adapterPairedDevices.notifyItemInserted(pairedDevices.size() - 1);
+                }
             }
         }
         else {

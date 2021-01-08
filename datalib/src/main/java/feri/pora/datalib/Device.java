@@ -1,5 +1,7 @@
 package feri.pora.datalib;
 
+import java.util.ArrayList;
+
 public class Device {
     String name;
     String macAddress;
@@ -33,6 +35,14 @@ public class Device {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public static boolean checkIfAdded(Device device, ArrayList<Device> devices){
+        for (Device d : devices){
+            if (d.getMacAddress().equals(device.getMacAddress()))
+                return true;
+        }
+        return false;
     }
 
     @Override
