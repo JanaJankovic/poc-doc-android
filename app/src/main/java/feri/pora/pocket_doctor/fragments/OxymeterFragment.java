@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Set;
 import java.util.UUID;
 
@@ -127,7 +129,7 @@ public class OxymeterFragment extends Fragment {
         }
     }
 
-    public void connect(Device device) {
+    public boolean connect(Device device) {
         BluetoothSocket bluetoothSocket = null;
         try {
             if (bluetoothSocket == null || !connected) {
@@ -135,15 +137,45 @@ public class OxymeterFragment extends Fragment {
                 bluetoothSocket = hc.createInsecureRfcommSocketToServiceRecord(myUUID);
                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                 bluetoothSocket.connect();
+                return true;
             }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+
+        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OpenMeasureEvent event) {
-        //thread and connect there
+        OxymeterFragment.ConnectModule.execute();
+    }
+
+    private class ConnectModule extends AsyncTask<Device, Void, Boolean> {
+        private boolean connectSuccess = true;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(requireContext(), "Connecting...", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Boolean doInBackground (Device... devices) {
+           return connect(devices[0]);
+        }
+
+        @Override
+        protected void onPostExecute (Boolean result) {
+            super.onPostExecute(result);
+            if (!result) {
+                Toast.makeText(requireContext(), "Connection failed. Try again.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(requireContext(), "Connected", Toast.LENGTH_LONG).show();
+                connected = true;
+            }
+        }
     }
 }
+
