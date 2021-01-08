@@ -19,7 +19,6 @@ import feri.pora.pocket_doctor.events.OpenMeasureEvent;
 public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleViewBluetoothAdapter
         .RecycleViewDevice> {
     private ArrayList<Device> devices;
-    private Context context;
 
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
@@ -32,7 +31,6 @@ public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleVi
     }
 
     public RecycleViewBluetoothAdapter(Context context, ArrayList<Device> devices) {
-        this.context = context;
         this.devices = devices;
     }
 
@@ -79,14 +77,14 @@ public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleVi
         }
 
         public void bindGUI(View v) {
-            titles = v.findViewById(R.id.textView);
+            titles = v.findViewById(R.id.textViewTitle);
             subtitles = v.findViewById(R.id.textViewSubtitle);
             measureButton = v.findViewById(R.id.buttonMeasure);
         }
 
         public void bindItemsToDevices(Device device) {
             titles.setText(device.getName());
-            subtitles.setText(device.getStatus());
+            subtitles.setText(device.getMacAddress());
             measureButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

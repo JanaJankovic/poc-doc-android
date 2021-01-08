@@ -1,22 +1,28 @@
 package feri.pora.pocket_doctor.fragments;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import feri.pora.datalib.Device;
 import feri.pora.pocket_doctor.R;
@@ -24,13 +30,17 @@ import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.utils.RecycleViewBluetoothAdapter;
 
 public class OxymeterFragment extends Fragment {
+    private static final int REQUEST_ENABLE_BT = 0;
+
     private RecycleViewBluetoothAdapter adapterPairedDevices;
-    private RecycleViewBluetoothAdapter adapterAvailableDevices;
     private RecyclerView pairedRecycleView;
-    private RecyclerView availableRecycleView;
     private FloatingActionButton floatingActionButton;
+
     ArrayList<Device> availableDevices;
     ArrayList<Device> pairedDevices;
+
+    private BluetoothAdapter bluetoothAdapter = null;
+    private Set<BluetoothDevice> devices;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,43 +52,79 @@ public class OxymeterFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
 
-        availableDevices = new ArrayList<>();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         pairedDevices = new ArrayList<>();
+        pairedDevices.add(new Device("HC-08", "AS:VF:22:1EDE", "paired"));
+
         bindGUI(rootView);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                enableBluetoothOnDevice();
+                if(bluetoothAdapter.isEnabled()){
+                    scanDevices();
+                }
             }
         });
 
-        return  rootView;
+        return rootView;
     }
-
 
 
     private void bindGUI(View v) {
         adapterPairedDevices = new RecycleViewBluetoothAdapter(requireContext(), pairedDevices);
-        adapterAvailableDevices = new RecycleViewBluetoothAdapter(requireContext(), availableDevices);
         pairedRecycleView = (RecyclerView) v.findViewById(R.id.pairedRecyclerView);
-        availableRecycleView = (RecyclerView) v.findViewById(R.id.avialableRecyclerView);
+        pairedRecycleView.setAdapter(adapterPairedDevices);
+        pairedRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
         floatingActionButton = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
     }
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Discovery has found a device. Get the BluetoothDevice
-                // object and its info from the Intent.
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress(); // MAC address
+    private void enableBluetoothOnDevice() {
+        if (bluetoothAdapter == null) {
+            Toast.makeText(requireContext(),"This device does not have a bluetooth adapter", Toast.LENGTH_LONG);
+            // If the android device does not have bluetooth, just return and get out.
+            // There’s nothing the app can do in this case. Closing app.
+        }
+        
+        if( !bluetoothAdapter.isEnabled())
+        {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_ENABLE_BT)
+        {
+            if (resultCode == 0)
+            {
+                // If the resultCode is 0, the user selected “No” when prompt to
+                // allow the app to enable bluetooth.
+                // You may want to display a dialog explaining what would happen if
+                // the user doesn’t enable bluetooth.
+                Toast.makeText(requireContext(), "Access denied", Toast.LENGTH_LONG).show();
             }
         }
-    };
+    }
 
+    public void scanDevices() {
+        Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
 
+        if (devices.size() > 0) {
+            for (BluetoothDevice device : devices) {
+                Device pairedDevice = new Device(device.getName(), device.getAddress(), "paired");
+                pairedDevices.add(pairedDevice);
+                adapterPairedDevices.notifyDataSetChanged();
+                Log.i("FOUND!!!", device.getName() + " " + pairedDevices.size());
+            }
+        }
+        else {
+            // In case no device is found
+            Toast.makeText(requireContext(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
+        }
+    }
 }
