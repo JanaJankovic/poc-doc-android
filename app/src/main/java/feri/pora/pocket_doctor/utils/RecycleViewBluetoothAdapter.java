@@ -85,10 +85,14 @@ public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleVi
         public void bindItemsToDevices(Device device) {
             titles.setText(device.getName());
             subtitles.setText(device.getMacAddress());
+
+            if(!device.getName().equals("HC-05"))
+                measureButton.setVisibility(View.INVISIBLE);
+
             measureButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OpenMeasureEvent());
+                    EventBus.getDefault().post(new OpenMeasureEvent(device));
                 }
             });
         }

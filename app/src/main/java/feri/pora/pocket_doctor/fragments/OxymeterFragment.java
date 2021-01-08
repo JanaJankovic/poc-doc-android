@@ -2,6 +2,7 @@ package feri.pora.pocket_doctor.fragments;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,26 +17,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 import feri.pora.datalib.Device;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
+import feri.pora.pocket_doctor.events.OpenMeasureEvent;
 import feri.pora.pocket_doctor.utils.RecycleViewBluetoothAdapter;
 
 public class OxymeterFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 0;
-
-    private RecycleViewBluetoothAdapter adapterPairedDevices;
-    private RecyclerView pairedRecycleView;
-    private FloatingActionButton floatingActionButton;
-
-    ArrayList<Device> availableDevices;
-    ArrayList<Device> pairedDevices;
+    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private BluetoothAdapter bluetoothAdapter = null;
-    private Set<BluetoothDevice> devices;
+    private RecycleViewBluetoothAdapter adapterPairedDevices;
+    private RecyclerView pairedRecycleView;
+    private ArrayList<Device> pairedDevices;
+
+    private boolean connected = false;
+
+    private FloatingActionButton floatingActionButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,9 +89,7 @@ public class OxymeterFragment extends Fragment {
             // If the android device does not have bluetooth, just return and get out.
             // There’s nothing the app can do in this case. Closing app.
         }
-        
-        if( !bluetoothAdapter.isEnabled())
-        {
+        if( !bluetoothAdapter.isEnabled())  {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
@@ -94,10 +99,8 @@ public class OxymeterFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_ENABLE_BT)
-        {
-            if (resultCode == 0)
-            {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == 0) {
                 // If the resultCode is 0, the user selected “No” when prompt to
                 // allow the app to enable bluetooth.
                 // You may want to display a dialog explaining what would happen if
@@ -122,5 +125,25 @@ public class OxymeterFragment extends Fragment {
             // In case no device is found
             Toast.makeText(requireContext(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void connect(Device device) {
+        BluetoothSocket bluetoothSocket = null;
+        try {
+            if (bluetoothSocket == null || !connected) {
+                BluetoothDevice hc = bluetoothAdapter.getRemoteDevice(device.getMacAddress());
+                bluetoothSocket = hc.createInsecureRfcommSocketToServiceRecord(myUUID);
+                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+                bluetoothSocket.connect();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OpenMeasureEvent event) {
+        //thread and connect there
     }
 }
