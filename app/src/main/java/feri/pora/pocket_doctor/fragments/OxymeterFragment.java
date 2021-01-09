@@ -7,7 +7,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,22 +30,21 @@ import java.util.Set;
 import java.util.UUID;
 
 import feri.pora.datalib.Device;
+import feri.pora.datalib.MeasureData;
+import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
+import feri.pora.pocket_doctor.events.OnSocketConnected;
 import feri.pora.pocket_doctor.events.OnStatusChanged;
 import feri.pora.pocket_doctor.events.OpenMeasureEvent;
 import feri.pora.pocket_doctor.utils.RecycleViewBluetoothAdapter;
 
 public class OxymeterFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 0;
-    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
     private BluetoothAdapter bluetoothAdapter = null;
     private RecycleViewBluetoothAdapter adapterPairedDevices;
     private RecyclerView pairedRecycleView;
     private ArrayList<Device> pairedDevices;
-
-    private boolean connected = false;
 
     private FloatingActionButton floatingActionButton;
 
@@ -132,29 +131,6 @@ public class OxymeterFragment extends Fragment {
         }
     }
 
-    public boolean connect(Device device) {
-        BluetoothSocket bluetoothSocket = null;
-        if(connected) {
-            Toast.makeText(requireContext(), "Already connected!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        try {
-            if (bluetoothSocket == null || !connected) {
-                BluetoothDevice hc = bluetoothAdapter.getRemoteDevice(device.getMacAddress());
-                bluetoothSocket = hc.createInsecureRfcommSocketToServiceRecord(myUUID);
-                BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                bluetoothSocket.connect();
-                return true;
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -169,46 +145,14 @@ public class OxymeterFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OpenMeasureEvent event) {
-       ConnectModule connectModule = new ConnectModule();
-       connectModule.execute(event.getDevice());
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        MeasureDataFragment measureDataFragment = new MeasureDataFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("device", ApplicationState.getGson().toJson(event.getDevice()));
+        measureDataFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, measureDataFragment).commit();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OnStatusChanged event) {
-        connected = event.getStatus();
-        if(connected) {
-            Log.i("DADA", String.valueOf(connected));
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction().replace(R.id.nav_host_fragment, new MeasureDataFragment()).commit();
-        }
-    }
 
-    private class ConnectModule extends AsyncTask<Device, Void, Boolean> {
-        private ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(requireContext());
-            progressDialog.setMessage("Connecting...");
-            progressDialog.setIndeterminate(false);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground (Device... devices) {
-           return connect(devices[0]);
-        }
-
-        @Override
-        protected void onPostExecute (Boolean result) {
-            progressDialog.hide();
-            super.onPostExecute(result);
-            if (!result) {
-                Toast.makeText(requireContext(), "Connection failed. Try again.", Toast.LENGTH_SHORT).show();
-            }
-            EventBus.getDefault().post(new OnStatusChanged(result));
-        }
-    }
 }
 

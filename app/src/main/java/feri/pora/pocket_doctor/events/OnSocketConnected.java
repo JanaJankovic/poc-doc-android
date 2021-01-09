@@ -2,25 +2,11 @@ package feri.pora.pocket_doctor.events;
 
 import android.bluetooth.BluetoothSocket;
 
-public class OnStatusChanged {
-    boolean status;
+public class OnSocketConnected {
     private BluetoothSocket bluetoothSocket;
 
-    public OnStatusChanged(boolean status, BluetoothSocket bluetoothSocket) {
-        this.status = status;
+    public OnSocketConnected(BluetoothSocket bluetoothSocket) {
         this.bluetoothSocket = bluetoothSocket;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public boolean isStatus() {
-        return status;
     }
 
     public BluetoothSocket getBluetoothSocket() {
