@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -147,9 +148,22 @@ public class OxymeterFragment extends Fragment {
         return false;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OpenMeasureEvent event) {
-        OxymeterFragment.ConnectModule.execute();
+       ConnectModule connectModule = new ConnectModule();
+       connectModule.execute(event.getDevice());
     }
 
     private class ConnectModule extends AsyncTask<Device, Void, Boolean> {
