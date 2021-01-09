@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.UUID;
 
 import feri.pora.datalib.Device;
@@ -50,7 +51,7 @@ public class MeasureDataFragment extends Fragment {
 
         measureData = new MeasureData();
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        ConnectModule connectModule = new ConnectModule();
+        ConnectModule connectModule = new ConnectModule(this);
         Bundle bundle = getArguments();
         connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString("device"),
                 Device.class));
@@ -58,23 +59,36 @@ public class MeasureDataFragment extends Fragment {
         return  rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OnStatusChanged event) {
-        Log.i("MEME!", "Called");
         connected = event.getStatus();
         if(!connected) {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
         } else {
-            Toast.makeText(requireContext(), "Connected", Toast.LENGTH_SHORT).show();
             bluetoothSocket = event.getBluetoothSocket();
-            if (bluetoothSocket != null){
-                Log.i("MEME!", "YES");
-            }
         }
     }
 
     private class ConnectModule extends AsyncTask<Device, Void, OnStatusChanged> {
+        WeakReference<MeasureDataFragment> reference;
+
+        ConnectModule(MeasureDataFragment fragment) {
+            reference = new WeakReference<MeasureDataFragment>(fragment);
+        }
+
         private ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
@@ -86,27 +100,13 @@ public class MeasureDataFragment extends Fragment {
             progressDialog.show();
         }
 
-        @Override
-        protected OnStatusChanged doInBackground (Device... devices) {
-            return connect(devices[0]);
-        }
-
-        @Override
-        protected void onPostExecute (OnStatusChanged result) {
-            progressDialog.hide();
-            super.onPostExecute(result);
-            if (!result.getStatus()) {
-                Toast.makeText(requireContext(), "Connection failed. Try again.", Toast.LENGTH_SHORT).show();
-            }
-            EventBus.getDefault().post(result);
-        }
-
         public OnStatusChanged connect(Device device) {
+            MeasureDataFragment measureDataFragment = reference.get();
             BluetoothSocket bluetoothSocket = null;
 
             //FIX THIS TO BE BETTER! - problems with already connected
             if(connected) {
-                Toast.makeText(requireContext(), "Already connected!", Toast.LENGTH_SHORT).show();
+                return new OnStatusChanged(false, null);
             }
 
             try {
@@ -123,6 +123,26 @@ public class MeasureDataFragment extends Fragment {
             }
 
             return new OnStatusChanged(false, null);
+        }
+
+        @Override
+        protected OnStatusChanged doInBackground (Device... devices) {
+            return connect(devices[0]);
+        }
+
+        @Override
+        protected void onPostExecute (OnStatusChanged result) {
+            MeasureDataFragment measureDataFragment = reference.get();
+            progressDialog.hide();
+            super.onPostExecute(result);
+            if (!result.getStatus()) {
+                Toast.makeText(measureDataFragment.requireContext(), "Connection failed. Try again.",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(measureDataFragment.requireContext(), "Connected", Toast.LENGTH_SHORT).show();
+            }
+            EventBus.getDefault().post(result);
         }
     }
 }
