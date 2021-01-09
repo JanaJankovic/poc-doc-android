@@ -3,7 +3,7 @@ package feri.pora.datalib;
 import java.util.ArrayList;
 
 public class MeasureData {
-    ArrayList<Integer> bitsPerMinute;
+    ArrayList<Double> bitsPerMinute;
     ArrayList<Integer> spo2;
 
     public MeasureData() {
@@ -11,7 +11,7 @@ public class MeasureData {
         spo2 = new ArrayList<>();
     }
 
-    public ArrayList<Integer> getBitsPerMinute() {
+    public ArrayList<Double> getBeatsPerMinute() {
         return bitsPerMinute;
     }
 
@@ -19,7 +19,7 @@ public class MeasureData {
         return spo2;
     }
 
-    public void addBitPerMinuteToList(int bpm) {
+    public void addBitPerMinuteToList(Double bpm) {
         bitsPerMinute.add(bpm);
     }
 
@@ -27,4 +27,11 @@ public class MeasureData {
         this.spo2.add(spo2);
     }
 
+    @Override
+    public String toString() {
+        return "MeasureData{" +
+                "bitsPerMinute=" + bitsPerMinute +
+                ", spo2=" + spo2 +
+                '}';
+    }
 }
