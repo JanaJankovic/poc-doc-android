@@ -1,16 +1,13 @@
 package feri.pora.datalib;
 
-public class Doctor {
+public class Doctor extends Person {
     private String publicKey;
-    private String fullName;
-    private String phone;
-    private String location;
     private String email;
+    private String id;
 
-    public Doctor(String publicKey, String fullName, String phone, String location, String email) {
-        this.fullName = fullName;
-        this.phone = phone;
-        this.location = location;
+
+    public Doctor(String publicKey, String fullName, String phone, String location, String email, String id) {
+        super(id, fullName, phone, location);
         this.email = email;
         this.publicKey = publicKey;
     }
@@ -50,4 +47,6 @@ public class Doctor {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String GetId() { return  this.id; }
 }
