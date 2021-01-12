@@ -8,4 +8,5 @@
     <color name="colorAccentLight">#94fcf9</color>
     <color name="buttonBorder">#ffffff</color>
     <color name="transparent">#0000</color>
+    <color name="grayMessage">#c0c0c0</color>
 </resources>
