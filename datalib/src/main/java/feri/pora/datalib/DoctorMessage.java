@@ -4,7 +4,7 @@ public class DoctorMessage extends Message {
     private Doctor sender;
 
     public DoctorMessage(String message, Doctor sender) {
-        super(message);
+        super(message, sender);
         this.sender = sender;
     }
 
