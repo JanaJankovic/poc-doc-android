@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         this.user = new User();
         user.setMedicalNumber(medicalNumberText.getText().toString());
         user.setPassword(passwordText.getText().toString());
-
         //API REQUEST
         loginProcess();
         } else {

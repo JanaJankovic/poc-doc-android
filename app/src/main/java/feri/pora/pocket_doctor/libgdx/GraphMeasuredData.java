@@ -11,7 +11,7 @@ public class GraphMeasuredData extends MeasureDataFragment implements AndroidFra
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
     }
 
     @Override
