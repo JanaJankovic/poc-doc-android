@@ -92,6 +92,13 @@ public class MeasureDataFragment extends Fragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OnReadMeasure event) {
+        measureData.addBitPerMinuteToList(event.getBmp());
+        measureData.addSpo2ToList(event.getSpo2());
+        Log.i("MEASURED DATA", measureData.toString());
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -112,6 +119,7 @@ public class MeasureDataFragment extends Fragment {
                     String bmp = stringBuilder.substring(0, endOfLineIndex);
                     String spo2 = stringBuilder.substring(endOfLineIndex + 2, stringBuilder.length());
                     Log.i("MEASURED", bmp + " " + spo2);
+                    EventBus.getDefault().post(new OnReadMeasure(bmp, spo2));
                     stringBuilder.delete(0, stringBuilder.length());
                 }
             }
