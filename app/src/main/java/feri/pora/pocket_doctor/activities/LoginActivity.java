@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getBaseContext(), error.getMessage(),  Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), error.getLocalizedMessage(),  Toast.LENGTH_LONG).show();
         }
     }
 
