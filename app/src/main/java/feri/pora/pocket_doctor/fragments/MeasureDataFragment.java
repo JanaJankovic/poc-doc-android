@@ -92,41 +92,28 @@ public class MeasureDataFragment extends Fragment {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OnReadMeasure event) {
-        if (event.getBmp() > 0 && event.getSpo2() > 0) {
-            measureData.addBitPerMinuteToList(event.getBmp());
-            measureData.addSpo2ToList(event.getSpo2());
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (bluetoothSocket != null && bluetoothSocket.isConnected()){
+            communicationThread = new CommunicationThread(bluetoothSocket);
+            communicationThread.start();
         }
-        Log.i("EVENTBUSM", measureData.toString());
     }
 
     private static class MessageHandler extends Handler {
         public void handleMessage(Message message) {
-            switch (message.what) {
-                case MESSAGE_RECEIVED:
-                    byte[] readBuf = (byte[]) message.obj;
-                    String receivedMessage = new String(readBuf, 0, message.arg1);
-                    stringBuilder.append(receivedMessage);
-                    int endOfLineIndex = stringBuilder.indexOf("\r\n");
-                    if (endOfLineIndex > 0) {
-                        String bmp = stringBuilder.substring(0, endOfLineIndex);
-                        String spo2 = stringBuilder.substring(endOfLineIndex + 2, stringBuilder.length());
-                        Double bmpValue = 0.0;
-                        int spo2Value = 0;
-                        try{
-                            bmpValue = Double.parseDouble(bmp);
-                            spo2Value = Integer.parseInt(spo2);
-                        } catch(NumberFormatException e) {
-                            bmpValue = -1.0;
-                            spo2Value = -1;
-                        }
-
-                        EventBus.getDefault().post(new OnReadMeasure(bmpValue, spo2Value));
-                        stringBuilder.delete(0, stringBuilder.length());
-
-                    }
-                    break;
+            if (message.what == MESSAGE_RECEIVED) {
+                byte[] readBuf = (byte[]) message.obj;
+                String receivedMessage = new String(readBuf, 0, message.arg1);
+                stringBuilder.append(receivedMessage);
+                int endOfLineIndex = stringBuilder.indexOf("\r\n");
+                if (endOfLineIndex > 0) {
+                    String bmp = stringBuilder.substring(0, endOfLineIndex);
+                    String spo2 = stringBuilder.substring(endOfLineIndex + 2, stringBuilder.length());
+                    Log.i("MEASURED", bmp + " " + spo2);
+                    stringBuilder.delete(0, stringBuilder.length());
+                }
             }
         }
     }
@@ -197,36 +184,31 @@ public class MeasureDataFragment extends Fragment {
 
     private class CommunicationThread extends Thread {
         private final InputStream inputStream;
-        private final OutputStream outputStream;
 
         public CommunicationThread(BluetoothSocket socket) {
             InputStream tempIn = null;
-            OutputStream tempOut = null;
-
             // Get the input and output streams, using temp objects because
             // member streams are final
             try {
                 tempIn = socket.getInputStream();
-                tempOut = socket.getOutputStream();
             } catch (IOException e) { }
 
             inputStream = tempIn;
-            outputStream = tempOut;
         }
 
         @Override
         public void run() {
-            byte[] buffer = new byte[256];  // buffer store for the stream
-            int bytes; // bytes returned from read()
-
             // Keep listening to the InputStream until an exception occurs
             while (true) {
                 try {
                     // Read from the InputStream
+                    byte[] buffer = new byte[1024];  // buffer store for the stream
+                    int bytes; // bytes returned from read()
                     bytes = inputStream.read(buffer);        // Get number of bytes and message in "buffer"
                     handleMessage.obtainMessage(MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
                     handleMessage.handleMessage(new Message());
                 } catch (IOException e) {
+                    e.printStackTrace();
                     break;
                 }
             }

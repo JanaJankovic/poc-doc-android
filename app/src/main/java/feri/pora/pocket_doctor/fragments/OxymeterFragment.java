@@ -1,11 +1,8 @@
 package feri.pora.pocket_doctor.fragments;
 
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,20 +21,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 
 import feri.pora.datalib.Device;
-import feri.pora.datalib.MeasureData;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
-import feri.pora.pocket_doctor.events.OnSocketConnected;
-import feri.pora.pocket_doctor.events.OnStatusChanged;
 import feri.pora.pocket_doctor.events.OpenMeasureEvent;
-import feri.pora.pocket_doctor.utils.RecycleViewBluetoothAdapter;
+import feri.pora.pocket_doctor.adapters.RecycleViewBluetoothAdapter;
 
 public class OxymeterFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 0;

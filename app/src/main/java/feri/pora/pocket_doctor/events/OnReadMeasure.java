@@ -1,19 +1,23 @@
 package feri.pora.pocket_doctor.events;
 
 public class OnReadMeasure {
-    Double bmp;
+    double bmp;
     int spo2;
 
-    public OnReadMeasure(Double bmp, int spo2) {
-        this.bmp = bmp;
-        this.spo2 = spo2;
+    public OnReadMeasure(String bmp, String spo2) {
+        try {
+            this.bmp = Double.parseDouble(bmp);
+            this.spo2 = Integer.parseInt(spo2);
+        }catch (NumberFormatException e) {
+            System.out.println("INCORRECT NUMBERS");
+        }
     }
 
-    public Double getBmp() {
+    public double getBmp() {
         return bmp;
     }
 
-    public void setBmp(Double bmp) {
+    public void setBmp(double bmp) {
         this.bmp = bmp;
     }
 

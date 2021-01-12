@@ -1,4 +1,4 @@
-package feri.pora.pocket_doctor.utils;
+package feri.pora.pocket_doctor.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
