@@ -45,7 +45,7 @@ public class MeasureDataFragment extends Fragment {
     private Handler handleMessage;
     private CommunicationThread communicationThread;
 
-    private MeasureData measureData;
+    protected MeasureData measureData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
