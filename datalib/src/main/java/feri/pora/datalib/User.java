@@ -16,7 +16,8 @@ public class User extends Person {
     }
 
 
-    public User(String id, String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
+    public User(String id, String privateKey, String publicKey,
+                String medicalNumber, String fullName, String password, String phone) {
         super(id, fullName, phone, "");
         this.medicalNumber = medicalNumber;
         this.password = password;

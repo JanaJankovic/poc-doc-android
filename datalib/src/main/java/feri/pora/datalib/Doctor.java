@@ -3,8 +3,6 @@ package feri.pora.datalib;
 public class Doctor extends Person {
     private String publicKey;
     private String email;
-    private String id;
-
 
     public Doctor(String publicKey, String fullName, String phone, String location, String email, String id) {
         super(id, fullName, phone, location);
