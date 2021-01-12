@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void loginProcess() {
         subscription.add(NetworkUtil.getRetrofit().login(user)
                 .observeOn(AndroidSchedulers.mainThread())
