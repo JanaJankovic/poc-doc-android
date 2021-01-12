@@ -1,29 +1,25 @@
 package feri.pora.datalib;
 import java.util.ArrayList;
 
-public class User {
+public class User extends Person {
     private String privateKey;
     private String publicKey;
-    private String id;
     private String medicalNumber;
-    private String fullName;
     private String password;
-    private String phone;
-    private String location;
     private ArrayList<Doctor> doctorList;
     private ArrayList<Diagnosis> diagnosisList;
 
     public User(){
+        super();
         doctorList = new ArrayList<Doctor>();
         diagnosisList = new ArrayList<Diagnosis>();
     }
 
 
-    public User(String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
+    public User(String id, String privateKey, String publicKey, String medicalNumber, String fullName, String password, String phone) {
+        super(id, fullName, phone, "");
         this.medicalNumber = medicalNumber;
-        this.fullName = fullName;
         this.password = password;
-        this.phone = phone;
 
         this.privateKey = privateKey;
         this.publicKey = publicKey;

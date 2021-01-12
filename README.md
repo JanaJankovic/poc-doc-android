@@ -303,11 +303,11 @@ public static void saveLoggedUser(User user) {...}
 
 ## Examples
 * Login
-![Login](app/src/main/res/drawable/Screenshot_1.png)
+![Login](app/src/main/res/drawable/screenshot_1.png)
 
 * Register
-![Register](app/src/main/res/drawable/Screenshot_3.png)
+![Register](app/src/main/res/drawable/screenshot_3.png)
 
 * Nav bar
-![Nav Bar](app/src/main/res/drawable/Screenshot_4.png)
+![Nav Bar](app/src/main/res/drawable/screenshot_4.png)
 
