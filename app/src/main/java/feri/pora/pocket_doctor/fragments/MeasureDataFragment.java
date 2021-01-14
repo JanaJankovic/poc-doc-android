@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,9 +40,9 @@ import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.events.OnReadMeasure;
 import feri.pora.pocket_doctor.events.OnStatusChanged;
-import feri.pora.pocket_doctor.libgdx.GdxFrameLayout;
 
-public class MeasureDataFragment extends Fragment implements AndroidFragmentApplication.Callbacks, View.OnClickListener {
+
+public class MeasureDataFragment extends Fragment implements View.OnClickListener {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     static final int MESSAGE_RECEIVED = 1;
     public static StringBuilder stringBuilder;
@@ -133,11 +132,6 @@ public class MeasureDataFragment extends Fragment implements AndroidFragmentAppl
 
     }
 
-
-    @Override
-    public void exit() {
-
-    }
 
     @Override
     public void onClick(View v) {
