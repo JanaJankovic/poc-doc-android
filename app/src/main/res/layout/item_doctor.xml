@@ -22,7 +22,7 @@
         android:layout_marginLeft="10dp"
         android:text="Doctor name"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
@@ -30,26 +30,36 @@
         android:id="@+id/textViewSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:shadowColor="@color/greyText"
         android:text="Telephone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <Button
         android:id="@+id/buttonOpenChat"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/ic_baseline_chat_bubble_24"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonMore"
         app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
 
     <Button
         android:id="@+id/buttonCall"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/ic_baseline_local_phone_24"
         app:layout_constraintEnd_toStartOf="@+id/buttonOpenChat"
         app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
+
+    <Button
+        android:id="@+id/buttonMore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_plus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonOpenChat" />
 </androidx.constraintlayout.widget.ConstraintLayout>
