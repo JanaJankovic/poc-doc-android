@@ -43,7 +43,7 @@ import feri.pora.pocket_doctor.events.OnReadMeasure;
 import feri.pora.pocket_doctor.events.OnStatusChanged;
 import feri.pora.pocket_doctor.libgdx.GdxFrameLayout;
 
-public class MeasureDataFragment extends Fragment implements  AndroidFragmentApplication.Callbacks {
+public class MeasureDataFragment extends Fragment implements AndroidFragmentApplication.Callbacks, View.OnClickListener {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     static final int MESSAGE_RECEIVED = 1;
     public static StringBuilder stringBuilder;
@@ -75,33 +75,12 @@ public class MeasureDataFragment extends Fragment implements  AndroidFragmentApp
         bindGUI(rootView);
         buttonRetry.setVisibility(View.INVISIBLE);
         buttonRequest.setVisibility(View.INVISIBLE);
-        buttonStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonRetry.setVisibility(View.VISIBLE);
-                buttonRequest.setVisibility(View.VISIBLE);
-                buttonStop.setVisibility(View.INVISIBLE);
 
-                if(communicationThread.isAlive())
-                    communicationThread.interrupt();
+        buttonStop.setOnClickListener(this);
+        buttonRetry.setOnClickListener(this);
+        buttonRequest.setOnClickListener(this);
 
-                try {
-                    bluetoothSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-        measureData = new MeasureData();
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        ConnectModule connectModule = new ConnectModule(this);
-        Bundle bundle = getArguments();
-        handleMessage = new MessageHandler();
-        stringBuilder = new StringBuilder();
-        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString("device"),
-                Device.class));
+       executeBluetoothConnection();
 
         return  rootView;
     }
@@ -154,18 +133,56 @@ public class MeasureDataFragment extends Fragment implements  AndroidFragmentApp
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (bluetoothSocket != null && bluetoothSocket.isConnected()){
-            communicationThread = new CommunicationThread(bluetoothSocket);
-            communicationThread.start();
-        }
-    }
 
     @Override
     public void exit() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonStop:
+                buttonRetry.setVisibility(View.VISIBLE);
+                buttonRequest.setVisibility(View.VISIBLE);
+                buttonStop.setVisibility(View.INVISIBLE);
+
+                if(communicationThread.isAlive())
+                    communicationThread.interrupt();
+
+                try {
+                    bluetoothSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                bluetoothSocket = null;
+                connected = false;
+                break;
+            case R.id.buttonRetry:
+                buttonRetry.setVisibility(View.INVISIBLE);
+                buttonRequest.setVisibility(View.INVISIBLE);
+                buttonStop.setVisibility(View.VISIBLE);
+                executeBluetoothConnection();
+                break;
+            case R.id.buttonSend:
+                Toast.makeText(requireContext(), "Send", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    public void executeBluetoothConnection() {
+        measureData = new MeasureData();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        ConnectModule connectModule = new ConnectModule(this);
+        Bundle bundle = getArguments();
+        handleMessage = new MessageHandler();
+        stringBuilder = new StringBuilder();
+        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString("device"),
+                Device.class));
+    }
+
+    public void retryMeasuring() {
+        measureData = new MeasureData();
     }
 
     private static class MessageHandler extends Handler {
