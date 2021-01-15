@@ -36,7 +36,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void bindGui(View view) {
-        // TODO - read from mongoDb - currently problem: android wont connect to node.js application to send get request for messages
+
         List<Message> messageList = null;
 
         mMessageRecycler = (RecyclerView) view.findViewById(R.id.reyclerview_message_list);
