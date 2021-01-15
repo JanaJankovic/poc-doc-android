@@ -67,7 +67,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
     private FrameLayout frameLayout;
 
 
-    protected MeasureData measureData;
+    static public MeasureData measureData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,12 +85,6 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         buttonStop.setOnClickListener(this);
         buttonRetry.setOnClickListener(this);
         buttonRequest.setOnClickListener(this);
-
-
-        GraphFragment fragment = new GraphFragment();
-        FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-        trans.replace(R.id.content_framelayout, fragment);
-        trans.commit();
 
        executeBluetoothConnection();
 
@@ -129,6 +123,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
             bluetoothSocket = event.getBluetoothSocket();
             communicationThread = new CommunicationThread(bluetoothSocket);
             communicationThread.start();
+            startPlotter();
         }
     }
 
@@ -187,12 +182,17 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                 Device.class));
     }
 
-    public static class GraphFragment extends AndroidFragmentApplication implements AndroidFragmentApplication.Callbacks
-    {
-        // 5. Add the initializeForView() code in the Fragment's onCreateView method.
+    public void startPlotter() {
+        GraphFragment fragment = new GraphFragment();
+        FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.content_framelayout, fragment);
+        trans.commit();
+    }
+
+    public static class GraphFragment extends AndroidFragmentApplication implements AndroidFragmentApplication.Callbacks {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return initializeForView(new GdxGraphPlotter());
+            return initializeForView(new GdxGraphPlotter(measureData));
         }
 
         @Override
@@ -200,7 +200,6 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
 
         }
     }
-
 
     private static class MessageHandler extends Handler {
         public void handleMessage(Message message) {
@@ -303,7 +302,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
             while (true) {
                 try {
                     // Read from the InputStream
-                    byte[] buffer = new byte[1024];  // buffer store for the stream
+                    byte[] buffer = new byte[2048];  // buffer store for the stream
                     int bytes; // bytes returned from read()
                     bytes = inputStream.read(buffer);        // Get number of bytes and message in "buffer"
                     handleMessage.obtainMessage(MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
