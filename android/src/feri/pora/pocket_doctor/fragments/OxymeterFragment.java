@@ -1,6 +1,5 @@
 package feri.pora.pocket_doctor.fragments;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,12 +28,12 @@ import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.events.OpenMeasureEvent;
-import feri.pora.pocket_doctor.adapters.RecycleViewBluetoothAdapter;
+import feri.pora.pocket_doctor.adapters.BluetoothAdapter;
 
 public class OxymeterFragment extends Fragment {
     private static final int REQUEST_ENABLE_BT = 0;
-    private BluetoothAdapter bluetoothAdapter = null;
-    private RecycleViewBluetoothAdapter adapterPairedDevices;
+    private android.bluetooth.BluetoothAdapter bluetoothAdapter = null;
+    private BluetoothAdapter adapterPairedDevices;
     private RecyclerView pairedRecycleView;
     private ArrayList<Device> pairedDevices;
 
@@ -50,7 +49,7 @@ public class OxymeterFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
 
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
         pairedDevices = new ArrayList<>();
 
         bindGUI(rootView);
@@ -72,7 +71,7 @@ public class OxymeterFragment extends Fragment {
 
 
     private void bindGUI(View v) {
-        adapterPairedDevices = new RecycleViewBluetoothAdapter(requireContext(), pairedDevices);
+        adapterPairedDevices = new BluetoothAdapter(requireContext(), pairedDevices);
         pairedRecycleView = (RecyclerView) v.findViewById(R.id.pairedRecyclerView);
         pairedRecycleView.setAdapter(adapterPairedDevices);
         pairedRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -86,7 +85,7 @@ public class OxymeterFragment extends Fragment {
             // There’s nothing the app can do in this case. Closing app.
         }
         if( !bluetoothAdapter.isEnabled())  {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            Intent enableBtIntent = new Intent(android.bluetooth.BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }

@@ -1,5 +1,9 @@
 package feri.pora.pocket_doctor.network;
 
+import java.util.ArrayList;
+
+import feri.pora.datalib.Doctor;
+import feri.pora.datalib.Message;
 import feri.pora.datalib.User;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,4 +20,16 @@ public interface RetrofitInterface {
 
     @GET("/patients/{id}")
     Observable<User> getProfile(@Path("id") String id);
+
+    @GET("/doctors/")
+    Observable<ArrayList<Doctor>> getDoctors();
+
+    @GET("messages/{doctorId}/{patientId}")
+    Observable<ArrayList<Message>> getMessages(@Path("doctorId") String doctorId,
+                                               @Path("patientId") String patientId);
+
+    @POST("/messages/")
+    Observable<Message> sendMessage(@Body Message message);
 }
+
+

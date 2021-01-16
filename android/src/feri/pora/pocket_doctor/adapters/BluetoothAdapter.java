@@ -16,7 +16,7 @@ import feri.pora.datalib.Device;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.events.OpenMeasureEvent;
 
-public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleViewBluetoothAdapter
+public class BluetoothAdapter extends RecyclerView.Adapter <BluetoothAdapter
         .RecycleViewDevice> {
     private ArrayList<Device> devices;
 
@@ -30,7 +30,7 @@ public class RecycleViewBluetoothAdapter extends RecyclerView.Adapter <RecycleVi
         this.listener =  listener;
     }
 
-    public RecycleViewBluetoothAdapter(Context context, ArrayList<Device> devices) {
+    public BluetoothAdapter(Context context, ArrayList<Device> devices) {
         this.devices = devices;
     }
 

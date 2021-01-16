@@ -28,9 +28,9 @@
             android:title="Pulse measurement" />
 
         <item
-            android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_chat"
-            android:title="Chat" />
+            android:id="@+id/nav_doctors"
+            android:icon="@drawable/ic_stethoscope"
+            android:title="Doctors" />
 
         <item
             android:id="@+id/nav_logout"

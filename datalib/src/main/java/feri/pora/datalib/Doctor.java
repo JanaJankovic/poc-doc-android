@@ -47,4 +47,16 @@ public class Doctor extends Person {
     }
 
     public String GetId() { return  this.id; }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "publicKey='" + publicKey + '\'' +
+                ", email='" + email + '\'' +
+                ", id='" + id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
 }

@@ -30,6 +30,7 @@ import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.fragments.ActiveTherapiesFragment;
 import feri.pora.pocket_doctor.fragments.ChatFragment;
+import feri.pora.pocket_doctor.fragments.DoctorListFragment;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
 import feri.pora.pocket_doctor.fragments.OxymeterFragment;
@@ -90,10 +91,10 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                                 .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
-                    case R.id.nav_chat :
-                        toolbar.setTitle("Chat");
+                    case R.id.nav_doctors :
+                        toolbar.setTitle("Available doctors");
                         getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.nav_host_fragment, new ChatFragment()).commit();
+                                    .replace(R.id.nav_host_fragment, new DoctorListFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_active_therapies:

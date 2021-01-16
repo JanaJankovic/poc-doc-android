@@ -1,20 +1,39 @@
 package feri.pora.datalib;
 
 public class Message {
-    protected String message;
-    protected Person sender;
+    private String content;
+    private Person sender;
+    private String receiverId;
+    private String status;
 
-    public Message(String message, Person person) {
+    public Message(String message, Person person, String status) {
         this.sender = person;
-        this.message = message;
+        this.content = message;
+        this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Person getSender() {
@@ -23,5 +42,14 @@ public class Message {
 
     public void setSender(Person sender) {
         this.sender = sender;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message='" + content + '\'' +
+                ", sender=" + sender +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

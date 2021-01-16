@@ -1,5 +1,9 @@
 package feri.pora.datalib;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import javax.print.Doc;
+
 
 public class User extends Person {
     private String privateKey;
@@ -87,13 +91,29 @@ public class User extends Person {
     }
 
     public void addDoctorToList(Doctor d) {
-        if(! doctorList.contains(d) )
+        if (!hasDoctor(d))
             doctorList.add(d);
     }
 
     public void removeDoctorFromList(Doctor d) {
-        if(doctorList.contains(d))
-            doctorList.remove(d);
+       for (Doctor doctor : doctorList)
+           if (d.getId().equals(doctor.getId())) {
+               doctorList.remove(doctor);
+               break;
+           }
+
+
+    }
+
+    public boolean hasDoctor(Doctor doctor) {
+        System.out.println(doctorList);
+        for (Doctor d : doctorList){
+            System.out.println("CHECKER " + doctor.getId() + " " + d.getId());
+            if (d.getId().equals(doctor.getId()))
+                return true;
+        }
+
+        return false;
     }
 
     @Override
