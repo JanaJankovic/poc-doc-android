@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         bindGUI(rootView);
         buttonRetry.setVisibility(View.INVISIBLE);
         buttonRequest.setVisibility(View.INVISIBLE);
-
+        
         buttonStop.setOnClickListener(this);
         buttonRetry.setOnClickListener(this);
         buttonRequest.setOnClickListener(this);

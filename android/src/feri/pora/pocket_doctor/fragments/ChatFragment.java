@@ -3,6 +3,7 @@ package feri.pora.pocket_doctor.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,22 @@ public class ChatFragment extends Fragment {
         String title = "DR. " + fullName[fullName.length - 1];
         ((UserNavigationActivity)requireActivity()).getSupportActionBar().setTitle(title);
 
+        rootView.setFocusableInTouchMode(true);
+        rootView.requestFocus();
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.nav_host_fragment, new DoctorListFragment()).commit();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         messages = new ArrayList<>();
         subscription = new CompositeSubscription();
         bindGUI(rootView);
@@ -85,6 +102,8 @@ public class ChatFragment extends Fragment {
                 editTextChat.setText("");
             }
         });
+
+
 
         return  rootView;
     }

@@ -40,7 +40,7 @@ import feri.pora.pocket_doctor.ApplicationState;
 public class UserNavigationActivity extends AppCompatActivity implements AndroidFragmentApplication.Callbacks {
 
     private AppBarConfiguration mAppBarConfiguration;
-    public static Toolbar toolbar;
+    public  Toolbar toolbar;
     private DrawerLayout drawer;
     public static NavigationView navigationView;
     private  NavController navController;
