@@ -14,8 +14,9 @@
         android:layout_height="32dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/ic_stethoscope_doctor"
+        app:layout_constraintBottom_toBottomOf="@+id/text_message_body_doctor"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/text_message_body_doctor" />
 
     <TextView
         android:id="@+id/text_message_body_doctor"
