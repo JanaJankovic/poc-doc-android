@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
@@ -82,12 +83,13 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                 .setTitle("Pulse measurement");
 
         bindGUI(rootView);
-        buttonRetry.setVisibility(View.INVISIBLE);
-        buttonRequest.setVisibility(View.INVISIBLE);
 
-        buttonStop.setOnClickListener(this);
-        buttonRetry.setOnClickListener(this);
-        buttonRequest.setOnClickListener(this);
+       buttonRetry.setVisibility(View.INVISIBLE);
+       buttonRequest.setVisibility(View.INVISIBLE);
+
+       buttonStop.setOnClickListener(this);
+       buttonRetry.setOnClickListener(this);
+       buttonRequest.setOnClickListener(this);
 
        executeBluetoothConnection();
 
@@ -169,7 +171,18 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                 executeBluetoothConnection();
                 break;
             case R.id.buttonSend:
-                Toast.makeText(requireContext(), "Send", Toast.LENGTH_SHORT).show();
+                if(ApplicationState.loadLoggedUser().getDoctorList().size() == 0)
+                    Toast.makeText(requireContext(), "No personal doctors!", Toast.LENGTH_SHORT)
+                            .show();
+                else {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    SendDoctorList sendDoctorList = new SendDoctorList();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("measurement", ApplicationState.getGson().toJson(measureData));
+                    sendDoctorList.setArguments(bundle);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment, sendDoctorList).commit();
+                }
                 break;
         }
     }
