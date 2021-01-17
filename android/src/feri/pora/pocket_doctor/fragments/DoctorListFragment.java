@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,6 +64,7 @@ public class DoctorListFragment extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_doctor_list, null);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         doctors = new ArrayList<>();
         subscription = new CompositeSubscription();
         bindGUI(rootView);

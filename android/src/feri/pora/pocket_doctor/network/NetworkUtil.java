@@ -11,12 +11,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
 
 public class NetworkUtil {
+
     public static RetrofitInterface getRetrofit(){
 
         RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
 
         return new Retrofit.Builder()
                 .baseUrl(ApplicationConfig.HOST_IP)
+                .addCallAdapterFactory(rxAdapter)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(RetrofitInterface.class);
+
+    }
+
+    public static RetrofitInterface getRetrofit(boolean blockchain){
+
+        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
+
+        return new Retrofit.Builder()
+                .baseUrl(ApplicationConfig.BLOCKCHAIN_IP)
                 .addCallAdapterFactory(rxAdapter)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitInterface.class);

@@ -15,13 +15,10 @@ import java.util.ArrayList;
 
 import feri.pora.datalib.Doctor;
 import feri.pora.datalib.MeasureData;
-import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
-import feri.pora.pocket_doctor.events.OnListChanged;
 import feri.pora.pocket_doctor.events.OnMeasurementSend;
-import feri.pora.pocket_doctor.events.OnOpenChat;
-import feri.pora.pocket_doctor.events.OnSendMeasurementCancel;
+import feri.pora.pocket_doctor.events.OnMeasurementCancel;
 
 public class SendDoctorAdapter extends RecyclerView.Adapter <SendDoctorAdapter
         .DoctorItem> {
@@ -75,7 +72,7 @@ public class SendDoctorAdapter extends RecyclerView.Adapter <SendDoctorAdapter
             buttonCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OnSendMeasurementCancel());
+                    EventBus.getDefault().post(new OnMeasurementCancel());
                 }
             });
             buttonSend.setOnClickListener(new View.OnClickListener() {

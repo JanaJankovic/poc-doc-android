@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_home, null);
 
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         bindGUI(rootView);
 
         return  rootView;

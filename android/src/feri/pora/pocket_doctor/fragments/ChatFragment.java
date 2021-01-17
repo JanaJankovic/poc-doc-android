@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class ChatFragment extends Fragment {
         String fullName[] = doctor.getFullName().split(" ");
         String title = "DR. " + fullName[fullName.length - 1];
         ((UserNavigationActivity)requireActivity()).getSupportActionBar().setTitle(title);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         rootView.setFocusableInTouchMode(true);
         rootView.requestFocus();

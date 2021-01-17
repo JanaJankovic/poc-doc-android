@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class OxymeterFragment extends Fragment {
                 R.layout.fragment_oxymeter, null);
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         bluetoothAdapter = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
         pairedDevices = new ArrayList<>();

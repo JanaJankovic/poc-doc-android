@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import feri.pora.datalib.Doctor;
 import feri.pora.datalib.Message;
 import feri.pora.datalib.User;
+import feri.pora.pocket_doctor.events.OnMeasurementSend;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,9 +28,11 @@ public interface RetrofitInterface {
     @GET("messages/{doctorId}/{patientId}")
     Observable<ArrayList<Message>> getMessages(@Path("doctorId") String doctorId,
                                                @Path("patientId") String patientId);
-
     @POST("/messages/")
     Observable<Message> sendMessage(@Body Message message);
+
+    @POST("/transaction/newMeasureDataTransaction")
+    Observable<Void> postMeasureData(@Body OnMeasurementSend body);
 }
 
 
