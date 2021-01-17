@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 
 public class ListAnalysisFragment extends Fragment {
 
@@ -23,6 +24,10 @@ public class ListAnalysisFragment extends Fragment {
         }
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_list_analysis, null);
+
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar()
+                .setTitle("Analysis");
 
         return  rootView;
     }

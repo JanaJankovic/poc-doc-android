@@ -78,11 +78,13 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_measure_data, null);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar()
+                .setTitle("Pulse measurement");
 
         bindGUI(rootView);
         buttonRetry.setVisibility(View.INVISIBLE);
         buttonRequest.setVisibility(View.INVISIBLE);
-        
+
         buttonStop.setOnClickListener(this);
         buttonRetry.setOnClickListener(this);
         buttonRequest.setOnClickListener(this);

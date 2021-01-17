@@ -6,22 +6,29 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_medical_handbook"
+            android:icon="@drawable/ic_home_item"
             android:title="@string/menu_home" />
 
         <item
             android:id="@+id/nav_active_therapies"
             android:icon="@drawable/ic_therapy"
-            android:title="Active therapies" />
+            android:title="Therapies" />
+
+        <item
+            android:id="@+id/nav_diagnosis"
+            android:icon="@drawable/ic_medical_handbook"
+            android:title="Diagnosis" />
+
+        <item
+            android:id="@+id/nav_list_analysis"
+            android:icon="@drawable/ic_bar_chart"
+            android:title="@string/list_of_analysis" />
 
         <item
             android:id="@+id/nav_request_analysis"
             android:icon="@drawable/ic_analytics"
             android:title="@string/request_analysis" />
-        <item
-            android:id="@+id/nav_list_analysis"
-            android:icon="@drawable/ic_bar_chart"
-            android:title="@string/list_of_analysis" />
+
         <item
             android:id="@+id/nav_oxymeter"
             android:icon="@drawable/ic_cardiology"

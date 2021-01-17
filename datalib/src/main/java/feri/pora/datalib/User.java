@@ -116,6 +116,35 @@ public class User extends Person {
         return false;
     }
 
+    public ArrayList<Doctor> getDoctorList() {
+        return doctorList;
+    }
+
+    public void setDoctorList(ArrayList<Doctor> doctorList) {
+        this.doctorList = doctorList;
+    }
+
+    public ArrayList<Diagnosis> getDiagnosisList() {
+        return diagnosisList;
+    }
+
+    public void setDiagnosisList(ArrayList<Diagnosis> diagnosisList) {
+        this.diagnosisList = diagnosisList;
+    }
+
+    public String getStatus() {
+        for (Diagnosis diagnosis : diagnosisList) {
+            if (diagnosis.getTherapyList().size() > 0) {
+                for (Therapy therapy : diagnosis.getTherapyList()) {
+                    if (therapy.getEnd() == null)
+                        return "Undergoing therapy";
+                }
+            }
+        }
+
+        return "Healthy";
+    }
+
     @Override
     public String toString() {
         return "User{" +

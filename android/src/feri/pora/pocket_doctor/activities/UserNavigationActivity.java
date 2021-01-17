@@ -7,16 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,8 +24,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
-import feri.pora.pocket_doctor.fragments.ActiveTherapiesFragment;
-import feri.pora.pocket_doctor.fragments.ChatFragment;
+import feri.pora.pocket_doctor.fragments.DiagnosisFragment;
+import feri.pora.pocket_doctor.fragments.TherapiesFragment;
 import feri.pora.pocket_doctor.fragments.DoctorListFragment;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
 import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
@@ -63,12 +59,16 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
         textViewUserFullname.setText(ApplicationState.loadLoggedUser().getFullName());
         textViewUserMedicalNumber.setText(ApplicationState.loadLoggedUser().getMedicalNumber());
 
+        toolbar.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.nav_host_fragment, new HomeFragment()).commit();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home :
-                        toolbar.setTitle(R.string.menu_home);
+                        toolbar.setVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new HomeFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
@@ -100,7 +100,13 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                     case R.id.nav_active_therapies:
                         toolbar.setTitle("Active therapies");
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_host_fragment, new ActiveTherapiesFragment()).commit();
+                                .replace(R.id.nav_host_fragment, new TherapiesFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.nav_diagnosis:
+                        toolbar.setTitle("Diagnosis");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new DiagnosisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_logout :

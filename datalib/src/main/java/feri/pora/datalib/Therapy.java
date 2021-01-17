@@ -5,13 +5,16 @@ public class Therapy {
     private String description;
     private String startDate;
     private String endDate;
+    private String diagnosisId;
     private int repetition;
 
-    public Therapy(String name, String description, String start, int repetition) {
+    public Therapy(String name, String description, String start, int repetition,
+                   String diagnosisId) {
         this.name = name;
         this.description = description;
         this.startDate = start;
         this.repetition = repetition;
+        this.diagnosisId = diagnosisId;
     }
 
     public String getName() {
@@ -52,5 +55,22 @@ public class Therapy {
 
     public void setRepetition(int repetition) {
         this.repetition = repetition;
+    }
+
+    public String getDiagnosisId() {
+        return diagnosisId;
+    }
+
+    public void setDiagnosisId(String diagnosisId) {
+        this.diagnosisId = diagnosisId;
+    }
+
+    public String getDiagnosis(User user) {
+        for (Diagnosis diagnosis : user.getDiagnosisList()){
+            if (diagnosis.getId().equals(diagnosisId))
+                return diagnosis.getName();
+        }
+
+        return "Unknown diagnosis";
     }
 }

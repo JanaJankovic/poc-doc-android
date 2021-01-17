@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 
 public class RequestAnalysisFragment extends Fragment {
     private Button galleryButton;
@@ -48,6 +49,9 @@ public class RequestAnalysisFragment extends Fragment {
                 R.layout.fragment_request_analysis, null);
 
         bindGUI(rootView);
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
+        ((UserNavigationActivity) requireActivity()).getSupportActionBar()
+                .setTitle("Request analysis");
         
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override

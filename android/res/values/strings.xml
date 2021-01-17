@@ -13,7 +13,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="request_analysis">Request analysis</string>
     <string name="list_of_analysis">List of analysis</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_message">Enter message</string>
 </resources>

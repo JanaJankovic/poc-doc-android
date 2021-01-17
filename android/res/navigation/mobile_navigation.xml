@@ -37,9 +37,9 @@
 
     <fragment
         android:id="@+id/nav_f_act_therapies"
-        android:name="feri.pora.pocket_doctor.fragments.ActiveTherapiesFragment"
+        android:name="feri.pora.pocket_doctor.fragments.TherapiesFragment"
         android:label="Active therapies"
-        tools:layout="@layout/fragment_active_therapies" />
+        tools:layout="@layout/fragment_therapies" />
 
     <fragment
         android:id="@+id/nav_f_measure_data"
