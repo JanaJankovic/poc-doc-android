@@ -1,5 +1,6 @@
 package feri.pora.pocket_doctor.adapters;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import feri.pora.datalib.Diagnosis;
 import feri.pora.pocket_doctor.ApplicationState;
@@ -57,9 +60,16 @@ public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.Diag
         }
 
         public void bindItems(Diagnosis diagnosis) {
-            String name = diagnosis.getName() + " " + diagnosis.getTimestamp();
+            long value = (long) Double.parseDouble(diagnosis.getTimestamp());
+            String name = diagnosis.getName() + " " + getDate(value);
             diagnosisName.setText(name);
             diagnosisDescription.setText(diagnosis.getDescription());
+        }
+
+        private String getDate(long time) {
+            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+            String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+            return date;
         }
     }
 
