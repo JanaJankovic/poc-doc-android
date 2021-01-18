@@ -157,7 +157,7 @@ public class ChatFragment extends Fragment {
                 m.setSender(ApplicationState.loadLoggedUser());
         }
         System.out.println("MESSAGES RECVVV : " + messages.toString());
-        chatAdapter = new ChatAdapter(requireContext(), this.messages);
+        chatAdapter = new ChatAdapter(this.messages);
         messageRecycler.setAdapter(chatAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -177,14 +177,16 @@ public class ChatFragment extends Fragment {
             try {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
+                Log.i("ERROR!", errorBody);
+                //Response response = gson.fromJson(errorBody,Response.class);
+                //Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(requireContext(), error.getLocalizedMessage(),  Toast.LENGTH_LONG).show();
+            Log.i("ERROR!", error.getLocalizedMessage());
+            //Toast.makeText(requireContext(), error.getLocalizedMessage(),  Toast.LENGTH_LONG).show();
         }
     }
 

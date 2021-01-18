@@ -6,7 +6,6 @@ public class Diagnosis {
     private String id;
     private String name;
     private String description;
-    private ArrayList<Therapy> therapyList;
     private String doctorId;
     private String timestamp;
 
@@ -17,7 +16,6 @@ public class Diagnosis {
         this.description = description;
         this.doctorId = doctorId;
         this.timestamp = timestamp;
-        therapyList = new ArrayList<>();
     }
 
     public String getId() {
@@ -43,25 +41,7 @@ public class Diagnosis {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public void addTherapyToList(Therapy t) {
-        if(! therapyList.contains(t))
-            therapyList.add(t);
-    }
-
-    public void removeFromTherapyList(Therapy t) {
-        if(therapyList.contains(t))
-            therapyList.remove(t);
-    }
-
-    public ArrayList<Therapy> getTherapyList() {
-        return therapyList;
-    }
-
-    public void setTherapyList(ArrayList<Therapy> therapyList) {
-        this.therapyList = therapyList;
-    }
-
+    
     public String getDoctorId() {
         return doctorId;
     }
@@ -84,5 +64,17 @@ public class Diagnosis {
                 return doctor.getFullName();
         }
         return "Unknown doctor";
+    }
+
+    @Override
+    public String toString() {
+        return "Diagnosis{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+//                ", therapyList=" + therapyList.toString() +
+                ", doctorId='" + doctorId + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
     }
 }

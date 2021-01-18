@@ -20,7 +20,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Message> mMessageList;
 
-    public ChatAdapter(Context context, ArrayList<Message> messageList) {
+    public ChatAdapter(ArrayList<Message> messageList) {
         mMessageList = messageList;
     }
 

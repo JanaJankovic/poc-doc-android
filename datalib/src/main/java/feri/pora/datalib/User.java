@@ -11,12 +11,10 @@ public class User extends Person {
     private String medicalNumber;
     private String password;
     private ArrayList<Doctor> doctorList;
-    private ArrayList<Diagnosis> diagnosisList;
 
     public User(){
         super();
         doctorList = new ArrayList<Doctor>();
-        diagnosisList = new ArrayList<Diagnosis>();
     }
 
 
@@ -30,7 +28,6 @@ public class User extends Person {
         this.publicKey = publicKey;
 
         doctorList = new ArrayList<Doctor>();
-        diagnosisList = new ArrayList<Diagnosis>();
 
     }
 
@@ -124,23 +121,15 @@ public class User extends Person {
         this.doctorList = doctorList;
     }
 
-    public ArrayList<Diagnosis> getDiagnosisList() {
-        return diagnosisList;
-    }
-
-    public void setDiagnosisList(ArrayList<Diagnosis> diagnosisList) {
-        this.diagnosisList = diagnosisList;
-    }
-
     public String getStatus() {
-        for (Diagnosis diagnosis : diagnosisList) {
-            if (diagnosis.getTherapyList().size() > 0) {
-                for (Therapy therapy : diagnosis.getTherapyList()) {
-                    if (therapy.getEnd() == null)
-                        return "Undergoing therapy";
-                }
-            }
-        }
+//        for (Diagnosis diagnosis : diagnosisList) {
+//            if (diagnosis.getTherapyList().size() > 0) {
+//                for (Therapy therapy : diagnosis.getTherapyList()) {
+//                    if (therapy.getEnd() == null)
+//                        return "Undergoing therapy";
+//                }
+//            }
+//        }
 
         return "Healthy";
     }
@@ -149,12 +138,10 @@ public class User extends Person {
     public String toString() {
         return "User{" +
                 "privateKey='" + privateKey + '\'' +
-                ", id='" + id + '\'' +
+                ", publicKey='" + publicKey + '\'' +
                 ", medicalNumber='" + medicalNumber + '\'' +
-                ", fullName='" + fullName + '\'' +
                 ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", location='" + location + '\'' +
+                ", doctorList=" + doctorList.toString() +
                 '}';
     }
 }

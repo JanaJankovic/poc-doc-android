@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,7 +22,7 @@ public class HomeFragment extends Fragment {
     private HomeAdapter homeAdapter;
     private RecyclerView recyclerView;
     private TextView fullName;
-    private TextView status;
+    private TextView medicalNumber;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,8 +100,8 @@ public class HomeFragment extends Fragment {
         });
         fullName = (TextView) v.findViewById(R.id.textViewFullnamePatient);
         fullName.setText(ApplicationState.loadLoggedUser().getFullName());
-        status = (TextView) v.findViewById(R.id.textViewHealthStatus);
-        status.setText(ApplicationState.loadLoggedUser().getStatus());
+        medicalNumber = (TextView) v.findViewById(R.id.textViewHealthStatus);
+        medicalNumber.setText(ApplicationState.loadLoggedUser().getMedicalNumber());
     }
 
 }

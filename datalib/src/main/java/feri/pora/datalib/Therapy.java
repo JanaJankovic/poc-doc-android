@@ -65,12 +65,15 @@ public class Therapy {
         this.diagnosisId = diagnosisId;
     }
 
-    public String getDiagnosis(User user) {
-        for (Diagnosis diagnosis : user.getDiagnosisList()){
-            if (diagnosis.getId().equals(diagnosisId))
-                return diagnosis.getName();
-        }
-
-        return "Unknown diagnosis";
+    @Override
+    public String toString() {
+        return "Therapy{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", diagnosisId='" + diagnosisId + '\'' +
+                ", repetition=" + repetition +
+                '}';
     }
 }

@@ -2,8 +2,11 @@ package feri.pora.pocket_doctor.network;
 
 import java.util.ArrayList;
 
+import feri.pora.datalib.Data;
+import feri.pora.datalib.Diagnosis;
 import feri.pora.datalib.Doctor;
 import feri.pora.datalib.Message;
+import feri.pora.datalib.Therapy;
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.events.OnMeasurementSend;
 import retrofit2.http.Body;
@@ -33,6 +36,12 @@ public interface RetrofitInterface {
 
     @POST("/transaction/newMeasureDataTransaction")
     Observable<Void> postMeasureData(@Body OnMeasurementSend body);
+
+    @POST("/blockchain/getTherapiesPatient")
+    Observable<ArrayList<Therapy>> getTherapies(@Body Data data);
+
+    @POST("/blockchain/getDiagnosisPatient")
+    Observable<ArrayList<Diagnosis>> getDiagnosis(@Body Data data);
 }
 
 
