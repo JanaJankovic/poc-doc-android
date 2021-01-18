@@ -42,7 +42,6 @@ public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.Diag
     }
 
     public class DiagnosisItem extends RecyclerView.ViewHolder {
-        private TextView doctorFullName;
         private TextView diagnosisName;
         private TextView diagnosisDescription;
 
@@ -53,13 +52,11 @@ public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.Diag
         }
 
         public void bindGUI(View v) {
-            doctorFullName = v.findViewById(R.id.textViewDoctorDiagnosis);
             diagnosisName = v.findViewById(R.id.textViewDiagnosis);
             diagnosisDescription = v.findViewById(R.id.textViewDescription);
         }
 
         public void bindItems(Diagnosis diagnosis) {
-            doctorFullName.setText(diagnosis.getDoctorFullname(ApplicationState.loadLoggedUser()));
             String name = diagnosis.getName() + " " + diagnosis.getTimestamp();
             diagnosisName.setText(name);
             diagnosisDescription.setText(diagnosis.getDescription());

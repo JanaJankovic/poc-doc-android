@@ -42,7 +42,6 @@ public class TherapyAdapter extends RecyclerView.Adapter<TherapyAdapter.TherapyI
     }
 
     public class TherapyItem extends RecyclerView.ViewHolder {
-        private TextView diagnosisName;
         private TextView therapyName;
         private TextView therapyTime;
         private TextView therapyDescription;
@@ -54,15 +53,13 @@ public class TherapyAdapter extends RecyclerView.Adapter<TherapyAdapter.TherapyI
         }
 
         public void bindGUI(View v) {
-            therapyName = v.findViewById(R.id.textViewTherapyDiagnosis);
-            diagnosisName = v.findViewById(R.id.textViewTherapyName);
+            therapyName = v.findViewById(R.id.textViewTherapyName);
             therapyTime = v.findViewById(R.id.textViewTimeTherapy);
             therapyDescription = v.findViewById(R.id.textViewTherapyDescription);
         }
 
         public void bindItems(Therapy therapy) {
             therapyName.setText(therapy.getName());
-            diagnosisName.setText(therapy.getDiagnosis(ApplicationState.loadLoggedUser()));
             String time = therapy.getStart() + " - " + therapy.getEnd();
             therapyTime.setText(time);
             therapyDescription.setText(therapy.getDescription());
