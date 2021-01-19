@@ -17,7 +17,7 @@ public class NetworkUtil {
         RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
 
         return new Retrofit.Builder()
-                .baseUrl(ApplicationConfig.HOST_IP)
+                .baseUrl(ApplicationConfig.HOST_IP_NODE)
                 .addCallAdapterFactory(rxAdapter)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitInterface.class);
@@ -55,7 +55,7 @@ public class NetworkUtil {
         RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
 
         return new Retrofit.Builder()
-                .baseUrl(ApplicationConfig.HOST_IP)
+                .baseUrl(ApplicationConfig.HOST_IP_NODE)
                 .client(httpClient.build())
                 .addCallAdapterFactory(rxAdapter)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -79,7 +79,7 @@ public class NetworkUtil {
         RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
 
         return new Retrofit.Builder()
-                .baseUrl(ApplicationConfig.HOST_IP)
+                .baseUrl(ApplicationConfig.HOST_IP_NODE)
                 .client(httpClient.build())
                 .addCallAdapterFactory(rxAdapter)
                 .addConverterFactory(GsonConverterFactory.create())

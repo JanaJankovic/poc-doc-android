@@ -1,5 +1,6 @@
 package feri.pora.datalib;
 
+import java.util.ArrayList;
 import java.util.Base64;
 
 public class Analysis {
@@ -35,5 +36,15 @@ public class Analysis {
 
     public void setImage(Base64 image) {
         this.image = image;
+    }
+
+    public Diagnosis getDiagnosis(ArrayList<Diagnosis> diagnoses){
+        if (diagnoses != null)
+            for(Diagnosis diagnosis : diagnoses) {
+                if(diagnosis.getIdAnalysis().equals(id)){
+                    return diagnosis;
+                }
+            }
+        return null;
     }
 }

@@ -18,6 +18,7 @@ import feri.pora.datalib.Prediction;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.events.OnPendingCancel;
 import feri.pora.pocket_doctor.events.OnPendingSend;
+import feri.pora.pocket_doctor.events.OnPendingShow;
 
 public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysisAdapter
         .PendingItem> {
@@ -31,7 +32,7 @@ public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysi
     @NonNull
     @Override
     public PendingAnalysisAdapter.PendingItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_doctor,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pending,
                 parent, false);
         PendingAnalysisAdapter.PendingItem viewHolder = new PendingAnalysisAdapter.PendingItem(view);
         return viewHolder;
@@ -77,7 +78,7 @@ public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysi
             buttonShowAnalysis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OnPendingSend(prediction));
+                    EventBus.getDefault().post(new OnPendingShow(prediction));
                 }
             });
         }
