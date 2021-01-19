@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
                         ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Analysis");
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
-                                new ListAnalysisFragment()).commit();
+                                new AnalysisFragment()).commit();
                         break;
                     case 3:
                         ((UserNavigationActivity) requireActivity()).navigationView

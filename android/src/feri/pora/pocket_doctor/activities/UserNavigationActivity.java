@@ -28,7 +28,7 @@ import feri.pora.pocket_doctor.fragments.DiagnosisFragment;
 import feri.pora.pocket_doctor.fragments.TherapiesFragment;
 import feri.pora.pocket_doctor.fragments.DoctorListFragment;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
-import feri.pora.pocket_doctor.fragments.ListAnalysisFragment;
+import feri.pora.pocket_doctor.fragments.AnalysisFragment;
 import feri.pora.pocket_doctor.fragments.OxymeterFragment;
 import feri.pora.pocket_doctor.fragments.RequestAnalysisFragment;
 import feri.pora.pocket_doctor.ApplicationState;
@@ -82,7 +82,7 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                     case R.id.nav_list_analysis :
                         toolbar.setTitle("List analysis");
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.nav_host_fragment, new ListAnalysisFragment()).commit();
+                                .replace(R.id.nav_host_fragment, new AnalysisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_oxymeter :

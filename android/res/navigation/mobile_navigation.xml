@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_f_list_analysis"
-        android:name="feri.pora.pocket_doctor.fragments.ListAnalysisFragment"
+        android:name="feri.pora.pocket_doctor.fragments.AnalysisFragment"
         android:label="List of analysis"
         tools:layout="@layout/fragment_list_analysis" />
 

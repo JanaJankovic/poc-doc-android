@@ -1,29 +1,39 @@
 package feri.pora.datalib;
 
-import java.util.ArrayList;
+import java.util.Base64;
 
 public class Analysis {
-    // will do when we finish URVRV projektna naloga (to see what data we will need form pictures and what we will give back to app)
-    private String filePath;
-    private ArrayList<String> possibleIllnesses;
+    private String id;
+    private String name;
+    private Base64 image;
 
-    public Analysis() {
-        possibleIllnesses = new ArrayList<>();
+    public Analysis(String id, String name, Base64 image) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
     }
 
-    public Analysis(String filePath) {
-        this.filePath = filePath;
+    public String getId() {
+        return id;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public String getName() {
+        return name;
     }
 
-    public ArrayList<String> getPossibleIllnesses() {
-        return possibleIllnesses;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Base64 getImage() {
+        return image;
+    }
+
+    public void setImage(Base64 image) {
+        this.image = image;
     }
 }
