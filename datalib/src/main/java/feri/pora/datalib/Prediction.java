@@ -1,28 +1,27 @@
 package feri.pora.datalib;
 
-import java.util.Base64;
 
 public class Prediction {
     private String id;
     private String filePath;
     private String prediction;
     private String date;
-    private String base64;
+    private String image;
+    private boolean confirmed;
+    private String userId;
+    private String doctorId;
 
     public Prediction(String filePath, String prediction, String date) {
         this.filePath = filePath;
         this.prediction = prediction;
         this.date = date;
-        id = "";
+        id = null;
+        image = null;
+        confirmed = false;
+        userId  = null;
+        doctorId = null;
     }
 
-    public String getBase64() {
-        return base64;
-    }
-
-    public void setBase64(String base64) {
-        this.base64 = base64;
-    }
 
     public String getId() {
         return id;
@@ -54,5 +53,45 @@ public class Prediction {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getBase64() {
+        return image;
+    }
+
+    public void setBase64(String base64) {
+        this.image = base64;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
     }
 }

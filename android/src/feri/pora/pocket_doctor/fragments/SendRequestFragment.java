@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.badlogic.gdx.utils.compression.lzma.Base;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -45,8 +46,10 @@ import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.config.ApplicationConfig;
+import feri.pora.pocket_doctor.events.OnMeasurementSend;
 import feri.pora.pocket_doctor.events.OnResponse;
 import feri.pora.pocket_doctor.events.OnStatusChanged;
+import feri.pora.pocket_doctor.network.NetworkUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -55,6 +58,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import retrofit2.adapter.rxjava.HttpException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class SendRequestFragment extends Fragment {
 
@@ -64,6 +71,8 @@ public class SendRequestFragment extends Fragment {
     public ProgressDialog progressDialog;
 
     private String filepath;
+
+    private CompositeSubscription subscription;
 
     public SendRequestFragment() {}
 
@@ -81,6 +90,7 @@ public class SendRequestFragment extends Fragment {
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        subscription = new CompositeSubscription();
         Bundle bundle = this.getArguments();
         filepath = bundle.getString("filepath");
 
@@ -180,21 +190,49 @@ public class SendRequestFragment extends Fragment {
                 EventBus.getDefault().post(new OnResponse());
                 ResponsePython responsePython = ApplicationState.getGson()
                         .fromJson(response.body().string(), ResponsePython.class);
-                Prediction prediction = new Prediction(
-                        saveFile(responsePython.getImageBytes()),
+                filepath = saveFile(responsePython.getImageBytes());
+                Prediction prediction = new Prediction(filepath,
                         responsePython.getCategory(),
                         new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+                prediction.setUserId(ApplicationState.loadLoggedUser().getId());
+                prediction.setImage(responsePython.getImageBytes());
+                postPrediction(prediction);
 
-                //TODO post request to node
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
-                showPredictionFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
             }
         });
+    }
+
+    private void postPrediction(Prediction prediction) {
+        subscription.add(NetworkUtil.getRetrofit().postPrediction(prediction)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse, this::handleError));
+    }
+
+    private void handleResponse(Prediction prediction) {
+        prediction.setFilePath(filepath);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
+        showPredictionFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
+    }
+
+    private void handleError(Throwable error) {
+        if (error instanceof HttpException) {
+            Gson gson = ApplicationState.getGson();
+            try {
+
+                String errorBody = ((HttpException) error).response().errorBody().string();
+                Log.i("ERROR!", errorBody);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(requireContext(), error.getLocalizedMessage(),  Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

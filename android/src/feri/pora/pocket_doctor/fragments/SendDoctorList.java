@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,8 +110,6 @@ public class SendDoctorList extends Fragment {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Log.i("ERROR!", errorBody);
-                //Response response = gson.fromJson(errorBody, Response.class);
-                //Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -139,7 +138,20 @@ public class SendDoctorList extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(OnPredictionSend event) {
-        //TODO post request za backend
+        predictionData.setDoctorId(event.getDoctorId());
+        updatePrediction(predictionData);
+    }
+
+    private void updatePrediction(Prediction prediction) {
+        subscription.add(NetworkUtil.getRetrofit().updatePrediction(prediction.getId(), prediction)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponsePrediction, this::handleError));
+    }
+
+    private void handleResponsePrediction(Prediction prediction) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction().replace(R.id.nav_host_fragment, new AnalysisFragment()).commit();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

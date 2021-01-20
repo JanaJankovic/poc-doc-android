@@ -102,7 +102,7 @@ public class ShowPredictionFragment extends Fragment {
         Log.i("TAGGGG", filepath);
         if (filepath.length() > 0) {
             File imageFile = new File(filepath);
-            Picasso.get().load(imageFile).fit().centerCrop().into(imageView);
+            Picasso.get().load(imageFile).fit().into(imageView);
         }
     }
 }

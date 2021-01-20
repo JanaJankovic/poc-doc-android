@@ -84,7 +84,7 @@ public class SendDoctorAdapter extends RecyclerView.Adapter <SendDoctorAdapter
                                 measureData.getSpo2(), ApplicationState.loadLoggedUser().getPrivateKey(),
                                 doctor.getPublicKey()));
                     } else {
-                        EventBus.getDefault().post(new OnPredictionSend());
+                        EventBus.getDefault().post(new OnPredictionSend(doctor.getId()));
                     }
                 }
             });
