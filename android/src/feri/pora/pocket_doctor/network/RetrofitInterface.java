@@ -11,6 +11,7 @@ import feri.pora.datalib.Therapy;
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.events.OnMeasurementSend;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -41,6 +42,12 @@ public interface RetrofitInterface {
 
     @PUT("/prediction/{id}")
     Observable<Prediction> updatePrediction(@Path("id") String predictionId, @Body Prediction prediction);
+
+    @DELETE("/prediction/{id}")
+    Observable<Void> deletePrediction(@Path("id") String predictionId);
+
+    @GET("/prediction/user/{id}")
+    Observable<ArrayList<Prediction>> getPending(@Path("id") String userId);
 
     @POST("/transaction/newMeasureDataTransaction")
     Observable<Void> postMeasureData(@Body OnMeasurementSend body);

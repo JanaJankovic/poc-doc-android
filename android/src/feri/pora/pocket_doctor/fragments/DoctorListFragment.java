@@ -126,7 +126,7 @@ public class DoctorListFragment extends Fragment {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
+                //Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -38,6 +38,8 @@ public class AnalysisFragment extends Fragment {
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
                 .setTitle("Analysis");
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((UserNavigationActivity) requireActivity()).navigationView
+                .setCheckedItem(R.id.nav_list_analysis);
 
 
         return  rootView;

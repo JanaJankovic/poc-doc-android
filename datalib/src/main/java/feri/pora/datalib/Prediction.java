@@ -94,4 +94,22 @@ public class Prediction {
     public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
     }
+
+    @Override
+    public String toString() {
+        if (doctorId == null)
+            doctorId = "";
+        if (filePath == null)
+            filePath = "";
+
+        return "Prediction{" +
+                "id='" + id + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", prediction='" + prediction + '\'' +
+                ", date='" + date + '\'' +
+                ", confirmed=" + confirmed +
+                ", userId='" + userId + '\'' +
+                ", doctorId='" + doctorId + '\'' +
+                '}';
+    }
 }

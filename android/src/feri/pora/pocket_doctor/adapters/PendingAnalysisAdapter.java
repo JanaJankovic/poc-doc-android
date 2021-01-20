@@ -51,6 +51,7 @@ public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysi
     public class PendingItem extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView subtitle;
+        private TextView status;
         private Button buttonShowAnalysis;
         private Button buttonCancel;
 
@@ -62,6 +63,7 @@ public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysi
         private void bindGUI(View v) {
             title = (TextView) v.findViewById(R.id.textViewCategory);
             subtitle = (TextView) v.findViewById(R.id.textViewPendingDate);
+            status = (TextView) v.findViewById(R.id.textView7);
             buttonShowAnalysis = (Button) v.findViewById(R.id.buttonShowAnalysis);
             buttonCancel = (Button) v.findViewById(R.id.buttonCancelAnalysis);
         }
@@ -69,12 +71,18 @@ public class PendingAnalysisAdapter extends RecyclerView.Adapter <PendingAnalysi
         public void bindItemsToData(Prediction prediction) {
             title.setText(prediction.getPrediction());
             subtitle.setText(prediction.getDate());
-            buttonCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EventBus.getDefault().post(new OnPendingCancel(prediction));
-                }
-            });
+            if (prediction.getDoctorId() == null || prediction.getDoctorId().equals("")) {
+                status.setVisibility(View.INVISIBLE);
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EventBus.getDefault().post(new OnPendingCancel(prediction));
+                    }
+                });
+            } else {
+                status.setVisibility(View.VISIBLE);
+                buttonCancel.setVisibility(View.INVISIBLE);
+            }
             buttonShowAnalysis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

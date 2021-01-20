@@ -30,7 +30,6 @@ public class ShowPredictionFragment extends Fragment {
     private ImageView imageView;
     private Button sendDoctor;
     private Button goToList;
-    private Button cancel;
 
     private Prediction prediction;
 
@@ -55,24 +54,17 @@ public class ShowPredictionFragment extends Fragment {
         date.setText("Date of prediction : " + prediction.getDate());
         setPictureBackground(rootView, prediction.getFilePath());
 
-        if (prediction.getId().equals("")){
-            cancel.setVisibility(View.INVISIBLE);
-            goToList.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.nav_host_fragment, new AnalysisFragment()).commit();
-                }
-            });
-        } else {
-            goToList.setVisibility(View.INVISIBLE);
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO delete request
-                }
-            });
+        if (prediction.getDoctorId()!= null && !prediction.getDoctorId().equals("")){
+            sendDoctor.setVisibility(View.INVISIBLE);
         }
+
+        goToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.nav_host_fragment, new AnalysisFragment()).commit();
+            }
+        });
 
         sendDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +87,6 @@ public class ShowPredictionFragment extends Fragment {
         imageView = (ImageView) v.findViewById(R.id.imageViewPrediction);
         sendDoctor = (Button) v.findViewById(R.id.buttonSendPrediction);
         goToList = (Button) v.findViewById(R.id.buttonListPending);
-        cancel = (Button) v.findViewById(R.id.buttonCanelPrediction);
     }
 
     public void setPictureBackground(View view, String filepath) {

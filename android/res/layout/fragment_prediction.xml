@@ -52,15 +52,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
-    <Button
-        android:id="@+id/buttonCanelPrediction"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/ic_baseline_close_24_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline25" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline25"
         android:layout_width="wrap_content"
