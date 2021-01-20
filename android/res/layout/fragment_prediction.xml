@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageViewPrediction"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
@@ -79,4 +79,14 @@
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+    <Button
+        android:id="@+id/buttonListPending"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ic_baseline_dehaze_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline25" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

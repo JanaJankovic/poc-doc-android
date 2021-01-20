@@ -6,17 +6,13 @@ public class Prediction {
     private String id;
     private String filePath;
     private String prediction;
-    private Base64 receivedImage;
     private String date;
 
-    public Prediction(String id, String prediction, Base64 receivedImage) {
-        this.id = id;
-        this.prediction = prediction;
-        this.receivedImage = receivedImage;
-    }
-
-    public Prediction(String filePath) {
+    public Prediction(String filePath, String prediction, String date) {
         this.filePath = filePath;
+        this.prediction = prediction;
+        this.date = date;
+        id = "";
     }
 
     public String getId() {
@@ -41,14 +37,6 @@ public class Prediction {
 
     public void setPrediction(String prediction) {
         this.prediction = prediction;
-    }
-
-    public Base64 getReceivedImage() {
-        return receivedImage;
-    }
-
-    public void setReceivedImage(Base64 receivedImage) {
-        this.receivedImage = receivedImage;
     }
 
     public String getDate() {

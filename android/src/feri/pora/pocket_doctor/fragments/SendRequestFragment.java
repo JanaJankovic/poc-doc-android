@@ -1,11 +1,13 @@
 package feri.pora.pocket_doctor.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,15 +27,26 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import android.util.Base64;
+import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import feri.pora.datalib.Prediction;
 import feri.pora.datalib.ResponsePython;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.config.ApplicationConfig;
+import feri.pora.pocket_doctor.events.OnResponse;
+import feri.pora.pocket_doctor.events.OnStatusChanged;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -48,6 +61,7 @@ public class SendRequestFragment extends Fragment {
     private ImageView imageView;
     private Button buttonCancel;
     private Button buttonSendRequest;
+    public ProgressDialog progressDialog;
 
     private String filepath;
 
@@ -84,6 +98,10 @@ public class SendRequestFragment extends Fragment {
         buttonSendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setIndeterminate(false);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 try {
                     postRequest();
                 } catch (IOException e) {
@@ -99,6 +117,7 @@ public class SendRequestFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.chosenImage);
         buttonCancel = (Button) view.findViewById(R.id.buttonClose);
         buttonSendRequest = (Button) view.findViewById(R.id.buttonSendRequest);
+        progressDialog = new ProgressDialog(requireContext());
     }
 
     public void setPictureBackground(View view) {
@@ -109,7 +128,7 @@ public class SendRequestFragment extends Fragment {
         }
     }
 
-    public void saveFile(String base64) throws IOException {
+    public String saveFile(String base64) throws IOException {
         String path[] = filepath.split("/");
         String file[] = path[path.length  - 1].split("\\.");
         String newPath = "";
@@ -126,6 +145,7 @@ public class SendRequestFragment extends Fragment {
         try (FileOutputStream stream = new FileOutputStream(newFile)) {
             stream.write(Base64.decode(base64, Base64.DEFAULT));
         }
+        return newPath;
     }
 
     public void postRequest() throws IOException {
@@ -149,19 +169,48 @@ public class SendRequestFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                EventBus.getDefault().post(new OnResponse());
                 String mMessage = e.getMessage().toString();
                 Log.w("failure Response", mMessage);
-                //call.cancel();
+                Toast.makeText(requireContext(), "Request failed", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                EventBus.getDefault().post(new OnResponse());
                 ResponsePython responsePython = ApplicationState.getGson()
                         .fromJson(response.body().string(), ResponsePython.class);
-                saveFile(responsePython.getImageBytes());
-                //make post request to node
+                Prediction prediction = new Prediction(
+                        saveFile(responsePython.getImageBytes()),
+                        responsePython.getCategory(),
+                        new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
 
+                //TODO post request to node
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
+                showPredictionFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OnResponse event) {
+       progressDialog.hide();
     }
 }

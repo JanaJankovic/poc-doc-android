@@ -23,14 +23,14 @@ import java.util.ArrayList;
 
 import feri.pora.datalib.Doctor;
 import feri.pora.datalib.MeasureData;
-import feri.pora.datalib.Response;
+import feri.pora.datalib.Prediction;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
-import feri.pora.pocket_doctor.adapters.DoctorAdapter;
 import feri.pora.pocket_doctor.adapters.SendDoctorAdapter;
 import feri.pora.pocket_doctor.events.OnMeasurementSend;
-import feri.pora.pocket_doctor.events.OnMeasurementCancel;
+import feri.pora.pocket_doctor.events.OnSendCancel;
+import feri.pora.pocket_doctor.events.OnPredictionSend;
 import feri.pora.pocket_doctor.network.NetworkUtil;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,6 +43,7 @@ public class SendDoctorList extends Fragment {
 
     private ArrayList<Doctor> doctors;
     private MeasureData measureData;
+    private Prediction predictionData;
 
     private CompositeSubscription subscription;
 
@@ -62,8 +63,17 @@ public class SendDoctorList extends Fragment {
         doctors = ApplicationState.loadLoggedUser().getDoctorList();
         Log.i("DOCTSDS", doctors.toString());
         Bundle bundle = getArguments();
-        measureData = ApplicationState.getGson().fromJson(bundle.getString("measurement"),
-                MeasureData.class);
+
+        String jsonMeasure = bundle.getString("measurement");
+        String jsonPrediction = bundle.getString("prediction");
+        if (jsonMeasure == null) {
+            ((UserNavigationActivity) requireActivity()).getSupportActionBar()
+                    .setTitle("Send prediction");
+            predictionData = ApplicationState.getGson().fromJson(jsonPrediction, Prediction.class);
+        } else {
+            measureData = ApplicationState.getGson().fromJson(jsonMeasure, MeasureData.class);
+        }
+
         bindGUI(rootView);
 
         return  rootView;
@@ -128,11 +138,23 @@ public class SendDoctorList extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(OnMeasurementCancel event) {
-        ((UserNavigationActivity) requireActivity()).navigationView
-                .setCheckedItem(R.id.nav_oxymeter);
-        ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
+    public void onMessageEvent(OnPredictionSend event) {
+        //TODO post request za backend
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OnSendCancel event) {
+        if (measureData != null ) {
+            ((UserNavigationActivity) requireActivity()).navigationView
+                    .setCheckedItem(R.id.nav_oxymeter);
+            ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
+        } else {
+            ((UserNavigationActivity) requireActivity()).navigationView
+                    .setCheckedItem(R.id.nav_request_analysis);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new RequestAnalysisFragment()).commit();
+        }
     }
 }

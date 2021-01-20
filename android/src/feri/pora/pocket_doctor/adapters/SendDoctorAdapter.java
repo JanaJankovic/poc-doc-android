@@ -18,7 +18,8 @@ import feri.pora.datalib.MeasureData;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.events.OnMeasurementSend;
-import feri.pora.pocket_doctor.events.OnMeasurementCancel;
+import feri.pora.pocket_doctor.events.OnSendCancel;
+import feri.pora.pocket_doctor.events.OnPredictionSend;
 
 public class SendDoctorAdapter extends RecyclerView.Adapter <SendDoctorAdapter
         .DoctorItem> {
@@ -72,15 +73,19 @@ public class SendDoctorAdapter extends RecyclerView.Adapter <SendDoctorAdapter
             buttonCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OnMeasurementCancel());
+                    EventBus.getDefault().post(new OnSendCancel());
                 }
             });
             buttonSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OnMeasurementSend(measureData.getBeatsPerMinute(),
-                            measureData.getSpo2(), ApplicationState.loadLoggedUser().getPrivateKey(),
-                            doctor.getPublicKey()));
+                    if (measureData != null) {
+                        EventBus.getDefault().post(new OnMeasurementSend(measureData.getBeatsPerMinute(),
+                                measureData.getSpo2(), ApplicationState.loadLoggedUser().getPrivateKey(),
+                                doctor.getPublicKey()));
+                    } else {
+                        EventBus.getDefault().post(new OnPredictionSend());
+                    }
                 }
             });
         }
