@@ -13,10 +13,11 @@ import feri.pora.pocket_doctor.R;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeItem> {
     String titles[] = new String[] {"Diagnosis", "Therapies", "Analysis",
-            "Request analysis", "Pulse", "Doctors"};
+            "Request analysis", "Pulse", "Doctors", "Settings", "Log out"};
     int images[] = new int[] {R.drawable.ic_medical_handbook_blue, R.drawable.ic_therapy_blue,
             R.drawable.ic_bar_chart_blue, R.drawable.ic_analytics_blue, R.drawable.ic_cardiology_blue,
-            R.drawable.ic_stethoscope_doctor};
+            R.drawable.ic_stethoscope_doctor, R.drawable.ic_baseline_settings_24_blue,
+            R.drawable.ic_baseline_exit_blue};
 
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);

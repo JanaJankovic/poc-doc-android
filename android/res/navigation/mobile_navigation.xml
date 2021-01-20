@@ -47,4 +47,10 @@
         android:label="Pulse measurement"
         tools:layout="@layout/fragment_measure_data" />
 
+    <fragment
+        android:id="@+id/nav_f_settings"
+        android:name="feri.pora.pocket_doctor.fragments.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>

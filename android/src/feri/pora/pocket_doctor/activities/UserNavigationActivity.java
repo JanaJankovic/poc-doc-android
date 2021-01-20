@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.TextView;
 
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
@@ -25,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.fragments.DiagnosisFragment;
+import feri.pora.pocket_doctor.fragments.SettingsFragment;
 import feri.pora.pocket_doctor.fragments.TherapiesFragment;
 import feri.pora.pocket_doctor.fragments.DoctorListFragment;
 import feri.pora.pocket_doctor.fragments.HomeFragment;
@@ -109,6 +109,12 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                                 .replace(R.id.nav_host_fragment, new DiagnosisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
+                    case R.id.nav_settings:
+                        toolbar.setTitle("Settings");
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.nav_host_fragment, new SettingsFragment()).commit();
+                        drawer.closeDrawer(GravityCompat.START);
+                        break;
                     case R.id.nav_logout :
                        User user = new User();
                        ApplicationState.saveLoggedUser(user);
@@ -139,12 +145,6 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
         textViewUserMedicalNumber = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userMedicalNumber);
 
         state = (ApplicationState)getApplication();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_navigation, menu);
-        return true;
     }
 
     @Override

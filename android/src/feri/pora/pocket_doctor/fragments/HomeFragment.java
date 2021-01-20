@@ -1,5 +1,6 @@
 package feri.pora.pocket_doctor.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
@@ -94,6 +97,39 @@ public class HomeFragment extends Fragment {
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new DoctorListFragment()).commit();
+                        break;
+                    case 6:
+                        ((UserNavigationActivity) requireActivity()).navigationView
+                                .setCheckedItem(R.id.nav_settings);
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Settings");
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.nav_host_fragment,
+                                new SettingsFragment()).commit();
+                        break;
+                    case 7:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                        builder.setTitle("Log out");
+                        builder.setMessage("Are you sure you want to exit?");
+
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                User user = new User();
+                                ApplicationState.saveLoggedUser(user);
+                                getActivity().finish();
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
                         break;
                 }
             }
