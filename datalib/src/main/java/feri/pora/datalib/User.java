@@ -141,7 +141,11 @@ public class User extends Person {
                 ", publicKey='" + publicKey + '\'' +
                 ", medicalNumber='" + medicalNumber + '\'' +
                 ", password='" + password + '\'' +
-                ", doctorList=" + doctorList.toString() +
+                ", doctorList=" + doctorList +
+                ", id='" + id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

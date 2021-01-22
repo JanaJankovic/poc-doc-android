@@ -106,8 +106,9 @@ public class LoginActivity extends AppCompatActivity {
             try {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(getBaseContext(), response.getData(),  Toast.LENGTH_LONG).show();
+                Log.i("ERROR!", errorBody);
+//                Response response = gson.fromJson(errorBody,Response.class);
+  //              Toast.makeText(getBaseContext(), response.getData(),  Toast.LENGTH_LONG).show();
 
             } catch (IOException e) {
                 e.printStackTrace();

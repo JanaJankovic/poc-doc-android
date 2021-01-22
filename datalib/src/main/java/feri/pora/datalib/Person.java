@@ -7,6 +7,7 @@ public class Person {
     protected String location;
 
     public Person() {
+        location = "";
     }
 
     public Person(String id, String fullName, String phone, String location) {

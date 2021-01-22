@@ -28,6 +28,9 @@ public interface RetrofitInterface {
     @GET("/patients/{id}")
     Observable<User> getProfile(@Path("id") String id);
 
+    @PUT("/patients/{id}")
+    Observable<User> updateProfile(@Path("id") String id, @Body User user);
+
     @GET("/doctors/")
     Observable<ArrayList<Doctor>> getDoctors();
 

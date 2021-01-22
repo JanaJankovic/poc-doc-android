@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="15dp">
 
     <Spinner
         android:id="@+id/spinnerLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
-        android:layout_marginRight="72dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline36" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/edtPassword"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_location"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/edtLocation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edtLocation" />
@@ -28,6 +28,8 @@
         android:id="@+id/edtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,18 +40,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_language"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerLanguage"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinnerLanguage"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/guideline36" />
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/edtLocation"
         app:layout_constraintTop_toTopOf="@+id/guideline35" />
 
     <TextView
@@ -57,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_name"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/edtName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edtName"
@@ -67,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_password"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/edtPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edtPassword"
@@ -78,7 +81,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edtName"
         app:layout_constraintTop_toTopOf="@+id/guideline33" />
 
     <TextView
@@ -86,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_phone"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/edtNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edtNumber"
@@ -97,7 +101,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edtNumber"
         app:layout_constraintTop_toTopOf="@+id/guideline34" />
 
     <Button
