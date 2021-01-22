@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
                     case 0 :
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_diagnosis);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Diagnosis");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.diagnosis2));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new DiagnosisFragment()).commit();
@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                     case 1 :
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_active_therapies);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Therapies");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.therapies));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new TherapiesFragment()).commit();
@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
                     case 2 :
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_list_analysis);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Analysis");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.analysis));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new AnalysisFragment()).commit();
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
                     case 3:
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_request_analysis);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Request analysis");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.req_analysis));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new RequestAnalysisFragment()).commit();
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
                     case 5 :
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_doctors);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Available doctors");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.available_doctors));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new DoctorListFragment()).commit();
@@ -101,24 +101,24 @@ public class HomeFragment extends Fragment {
                     case 6:
                         ((UserNavigationActivity) requireActivity()).navigationView
                                 .setCheckedItem(R.id.nav_settings);
-                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle("Settings");
+                        ((UserNavigationActivity) requireActivity()).toolbar.setTitle(getString(R.string.action_settings));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.nav_host_fragment,
                                 new SettingsFragment()).commit();
                         break;
                     case 7:
                         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                        builder.setTitle("Log out");
-                        builder.setMessage("Are you sure you want to exit?");
+                        builder.setTitle(getString(R.string.log_out));
+                        builder.setMessage(getString(R.string.are_you_sure));
 
-                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         });
 
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 User user = new User();

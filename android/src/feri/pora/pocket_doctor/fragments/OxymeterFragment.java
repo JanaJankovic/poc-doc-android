@@ -82,7 +82,7 @@ public class OxymeterFragment extends Fragment {
 
     private void enableBluetoothOnDevice() {
         if (bluetoothAdapter == null) {
-            Toast.makeText(requireContext(),"This device does not have a bluetooth adapter", Toast.LENGTH_LONG);
+            Toast.makeText(requireContext(),getString(R.string.no_bluetooth), Toast.LENGTH_LONG);
             // If the android device does not have bluetooth, just return and get out.
             // There’s nothing the app can do in this case. Closing app.
         }
@@ -102,7 +102,7 @@ public class OxymeterFragment extends Fragment {
                 // allow the app to enable bluetooth.
                 // You may want to display a dialog explaining what would happen if
                 // the user doesn’t enable bluetooth.
-                Toast.makeText(requireContext(), "Access denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getString(R.string.access_denied), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -111,7 +111,7 @@ public class OxymeterFragment extends Fragment {
         Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
         if (devices.size() > 0) {
             for (BluetoothDevice device : devices) {
-                Device pairedDevice = new Device(device.getName(), device.getAddress(), "paired");
+                Device pairedDevice = new Device(device.getName(), device.getAddress(), getString(R.string.paired));
                 if (!Device.checkIfAdded(pairedDevice, pairedDevices)) {
                     pairedDevices.add(pairedDevice);
                     adapterPairedDevices.notifyItemInserted(pairedDevices.size() - 1);
@@ -120,7 +120,7 @@ public class OxymeterFragment extends Fragment {
         }
         else {
             // In case no device is found
-            Toast.makeText(requireContext(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), getString(R.string.no_bluetooth_found), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -141,7 +141,7 @@ public class OxymeterFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         MeasureDataFragment measureDataFragment = new MeasureDataFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("device", ApplicationState.getGson().toJson(event.getDevice()));
+        bundle.putString(getString(R.string.device), ApplicationState.getGson().toJson(event.getDevice()));
         measureDataFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, measureDataFragment).commit();
     }

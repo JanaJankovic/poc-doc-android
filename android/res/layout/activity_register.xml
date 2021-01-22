@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="POC-DOC REGISTER"
+            android:text="@string/poc_doc_register"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Fullname"
+            android:text="@string/fullname"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="@+id/editTextFullName"
             app:layout_constraintTop_toBottomOf="@+id/userMedicalNumber" />
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Medical Number"
+            android:text="@string/medical_number"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="@+id/editTextMedicalNumber"
             app:layout_constraintTop_toBottomOf="@+id/editTextFullName" />
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Phone"
+            android:text="@string/phone"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="@+id/editTextPhone"
             app:layout_constraintTop_toBottomOf="@+id/editTextMedicalNumber" />
@@ -150,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
@@ -164,7 +164,7 @@
             android:background="@drawable/transparent_button_style"
             android:shadowColor="#00FFFFFF"
             android:stateListAnimator="@null"
-            android:text="CREATE ACCOUNT"
+            android:text="@string/create_account"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"

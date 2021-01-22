@@ -27,7 +27,7 @@
         android:background="@drawable/rounded_rectangle_dark"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:text="hi man, how are you?"
+        android:text="@string/hi_man_how_are_you"
         android:textColor="#ffffff"
         app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
         app:layout_constraintTop_toTopOf="parent" />

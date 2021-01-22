@@ -51,7 +51,7 @@ public class DiagnosisFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Diagnosis");
+                .setTitle(getString(R.string.diagnosis2));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         subscription = new CompositeSubscription();
@@ -66,7 +66,7 @@ public class DiagnosisFragment extends Fragment {
     }
 
     public void getDiagnoses() {
-        Log.i("PUBLICV", ApplicationState.loadLoggedUser().getPublicKey());
+        Log.i(getString(R.string.publicv), ApplicationState.loadLoggedUser().getPublicKey());
         subscription.add(NetworkUtil.getRetrofit(true)
                 .getDiagnosis(new Data(ApplicationState.loadLoggedUser().getPublicKey()))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,7 +81,7 @@ public class DiagnosisFragment extends Fragment {
             recyclerView.setAdapter(diagnosisAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         } else {
-            Toast.makeText(requireContext(), "No recorded diagnoses",  Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), getString(R.string.no_diagnoses),  Toast.LENGTH_LONG).show();
         }
     }
 
@@ -91,7 +91,7 @@ public class DiagnosisFragment extends Fragment {
             try {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Log.i("ERROR!", errorBody);
+                Log.i(getString(R.string.error), errorBody);
 
             } catch (IOException e) {
                 e.printStackTrace();

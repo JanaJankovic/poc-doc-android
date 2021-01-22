@@ -81,7 +81,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                 R.layout.fragment_measure_data, null);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Pulse measurement");
+                .setTitle(getString(R.string.pulse));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         bindGUI(rootView);
@@ -174,13 +174,13 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.buttonSend:
                 if(ApplicationState.loadLoggedUser().getDoctorList().size() == 0)
-                    Toast.makeText(requireContext(), "No personal doctors!", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), getString(R.string.no_doctors), Toast.LENGTH_SHORT)
                             .show();
                 else {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     SendDoctorList sendDoctorList = new SendDoctorList();
                     Bundle bundle = new Bundle();
-                    bundle.putString("measurement", ApplicationState.getGson().toJson(measureData));
+                    bundle.putString(getString(R.string.measurement), ApplicationState.getGson().toJson(measureData));
                     sendDoctorList.setArguments(bundle);
                     fragmentManager.beginTransaction()
                             .replace(R.id.nav_host_fragment, sendDoctorList).commit();
@@ -196,7 +196,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         Bundle bundle = getArguments();
         handleMessage = new MessageHandler();
         stringBuilder = new StringBuilder();
-        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString("device"),
+        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.device)),
                 Device.class));
     }
 
@@ -248,7 +248,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(requireContext());
-            progressDialog.setMessage("Connecting...");
+            progressDialog.setMessage(getString(R.string.connecting));
             progressDialog.setIndeterminate(false);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -290,11 +290,11 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
             progressDialog.hide();
             super.onPostExecute(result);
             if (!result.getStatus()) {
-                Toast.makeText(measureDataFragment.requireContext(), "Connection failed. Try again.",
+                Toast.makeText(measureDataFragment.requireContext(), getString(R.string.connecting_failed),
                         Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(measureDataFragment.requireContext(), "Connected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(measureDataFragment.requireContext(), getString(R.string.connected), Toast.LENGTH_SHORT).show();
             }
             EventBus.getDefault().post(result);
         }

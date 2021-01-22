@@ -24,7 +24,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
-        android:text="Request"
+        android:text="@string/request"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

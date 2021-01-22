@@ -133,7 +133,7 @@ public class PendingAnalysisFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("prediction", ApplicationState.getGson().toJson(event.getPrediction()));
+        bundle.putString(getString(R.string.prediction1), ApplicationState.getGson().toJson(event.getPrediction()));
         showPredictionFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
     }

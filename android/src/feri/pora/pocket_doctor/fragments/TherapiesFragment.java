@@ -51,7 +51,7 @@ public class TherapiesFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Therapies");
+                .setTitle(getString(R.string.therapies));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         subscription = new CompositeSubscription();
@@ -80,7 +80,7 @@ public class TherapiesFragment extends Fragment {
             recyclerView.setAdapter(therapyAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         } else {
-            Toast.makeText(requireContext(), "No recorded therapies",  Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), getString(R.string.no_therapies),  Toast.LENGTH_LONG).show();
         }
     }
 

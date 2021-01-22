@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         //API REQUEST
         loginProcess();
         } else {
-            Toast.makeText(getBaseContext(), "All fields are required", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.all_fields), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -134,9 +134,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            Toast.makeText(getBaseContext(), "Registration complete", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.registration_complete), Toast.LENGTH_LONG).show();
         } else if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.cancelled), Toast.LENGTH_LONG).show();
         }
     }
 }

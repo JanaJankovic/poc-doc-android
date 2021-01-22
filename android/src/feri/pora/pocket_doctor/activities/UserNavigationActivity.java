@@ -74,43 +74,43 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_request_analysis:
-                        toolbar.setTitle("Request analysis");
+                        toolbar.setTitle(getString(R.string.req_analysis));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new RequestAnalysisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_list_analysis :
-                        toolbar.setTitle("List analysis");
+                        toolbar.setTitle(getString(R.string.list_analysis));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new AnalysisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_oxymeter :
-                        toolbar.setTitle("Pulse measurement");
+                        toolbar.setTitle(getString(R.string.pulse));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new OxymeterFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_doctors :
-                        toolbar.setTitle("Available doctors");
+                        toolbar.setTitle(getString(R.string.available_doctors));
                         getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.nav_host_fragment, new DoctorListFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_active_therapies:
-                        toolbar.setTitle("Active therapies");
+                        toolbar.setTitle(getString(R.string.action_settings));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new TherapiesFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_diagnosis:
-                        toolbar.setTitle("Diagnosis");
+                        toolbar.setTitle(getString(R.string.diagnosis3));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new DiagnosisFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.nav_settings:
-                        toolbar.setTitle("Settings");
+                        toolbar.setTitle(getString(R.string.action_settings));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.nav_host_fragment, new SettingsFragment()).commit();
                         drawer.closeDrawer(GravityCompat.START);

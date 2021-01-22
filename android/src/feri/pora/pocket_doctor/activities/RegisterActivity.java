@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(!fullnameText.getText().toString().equals("") && !phoneText.getText().toString().equals("") &&
         !medicalNumberText.getText().toString().equals("") && !passwordText.getText().toString().equals("")) {
             if (passwordText.getText().toString().length() < 8) {
-                Toast.makeText(getBaseContext(), "Password is too short", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), getString(R.string.short_pass), Toast.LENGTH_LONG).show();
             } else {
                user.setFullName(fullnameText.getText().toString());
                user.setMedicalNumber(medicalNumberText.getText().toString());
@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         } else {
-            Toast.makeText(getBaseContext(), "All fields are required", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.all_fields), Toast.LENGTH_LONG).show();
         }
     }
 

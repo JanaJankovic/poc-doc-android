@@ -52,7 +52,7 @@ public class RequestAnalysisFragment extends Fragment {
         bindGUI(rootView);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Request analysis");
+                .setTitle(getString(R.string.req_analysis));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         galleryButton.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class RequestAnalysisFragment extends Fragment {
             if (grantResults.length < 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
             } else {
-                Toast.makeText(getActivity().getBaseContext(), "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getBaseContext(), getString(R.string.cancelled), Toast.LENGTH_LONG).show();
             }
         }
     }

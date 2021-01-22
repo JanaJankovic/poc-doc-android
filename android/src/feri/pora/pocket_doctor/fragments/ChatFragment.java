@@ -64,10 +64,10 @@ public class ChatFragment extends Fragment {
                 R.layout.fragment_chat, null);
 
         Bundle bundle = getArguments();
-        doctor = ApplicationState.getGson().fromJson(bundle.getString("doctor"),
+        doctor = ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.doctor2)),
                 Doctor.class);
         String fullName[] = doctor.getFullName().split(" ");
-        String title = "DR. " + fullName[fullName.length - 1];
+        String title = getString(R.string.doctor3) + fullName[fullName.length - 1];
         ((UserNavigationActivity)requireActivity()).getSupportActionBar().setTitle(title);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -98,7 +98,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Message message = new Message(editTextChat.getText().toString(),
-                        ApplicationState.loadLoggedUser(), "sent");
+                        ApplicationState.loadLoggedUser(), getString(R.string.sent));
                 message.setReceiverId(doctor.GetId());
                 sendMessage(message);
                 editTextChat.setText("");
@@ -151,12 +151,12 @@ public class ChatFragment extends Fragment {
     private void handleResponseMessages(ArrayList<Message> messages) {
         this.messages = messages;
         for (Message m : messages) {
-            if (m.getStatus().equals("received"))
+            if (m.getStatus().equals(getString(R.string.received)))
                 m.setSender(doctor);
-            else if (m.getStatus().equals("sent"))
+            else if (m.getStatus().equals(getString(R.string.sent)))
                 m.setSender(ApplicationState.loadLoggedUser());
         }
-        System.out.println("MESSAGES RECVVV : " + messages.toString());
+        System.out.println(getString(R.string.messages_recevvv) + messages.toString());
         chatAdapter = new ChatAdapter(this.messages);
         messageRecycler.setAdapter(chatAdapter);
         messageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -165,8 +165,8 @@ public class ChatFragment extends Fragment {
 
     private void handleResponseMessage(Message message) {
         message.setSender(ApplicationState.loadLoggedUser());
-        message.setStatus("sent");
-        System.out.println("SENTR MSSG" + message.toString());
+        message.setStatus(getString(R.string.sent));
+        System.out.println(getString(R.string.sentr_mssg) + message.toString());
         messages.add(message);
         chatAdapter.notifyDataSetChanged();
     }
@@ -177,7 +177,7 @@ public class ChatFragment extends Fragment {
             try {
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Log.i("ERROR!", errorBody);
+                Log.i(getString(R.string.error), errorBody);
                 //Response response = gson.fromJson(errorBody,Response.class);
                 //Toast.makeText(requireContext(), response.getData(),  Toast.LENGTH_LONG).show();
 
@@ -185,7 +185,7 @@ public class ChatFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            Log.i("ERROR!", error.getLocalizedMessage());
+            Log.i(getString(R.string.error), error.getLocalizedMessage());
             //Toast.makeText(requireContext(), error.getLocalizedMessage(),  Toast.LENGTH_LONG).show();
         }
     }

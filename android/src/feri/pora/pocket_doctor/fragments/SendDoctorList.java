@@ -58,18 +58,18 @@ public class SendDoctorList extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Send measurement");
+                .setTitle(getString(R.string.send_measurement));
 
         subscription = new CompositeSubscription();
         doctors = ApplicationState.loadLoggedUser().getDoctorList();
         Log.i("DOCTSDS", doctors.toString());
         Bundle bundle = getArguments();
 
-        String jsonMeasure = bundle.getString("measurement");
-        String jsonPrediction = bundle.getString("prediction");
+        String jsonMeasure = bundle.getString(getString(R.string.measurement));
+        String jsonPrediction = bundle.getString(getString(R.string.prediction1));
         if (jsonMeasure == null) {
             ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                    .setTitle("Send prediction");
+                    .setTitle(getString(R.string.send_prediction));
             predictionData = ApplicationState.getGson().fromJson(jsonPrediction, Prediction.class);
         } else {
             measureData = ApplicationState.getGson().fromJson(jsonMeasure, MeasureData.class);
@@ -95,7 +95,7 @@ public class SendDoctorList extends Fragment {
     }
 
     private void handleResponse(Void aVoid) {
-        Toast.makeText(requireContext(), "Measurement sent", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), getString(R.string.measurement_sent), Toast.LENGTH_SHORT).show();
         ((UserNavigationActivity) requireActivity()).navigationView
                 .setCheckedItem(R.id.nav_home);
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().hide();

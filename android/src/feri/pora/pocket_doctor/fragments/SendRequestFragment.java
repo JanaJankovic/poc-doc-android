@@ -108,7 +108,7 @@ public class SendRequestFragment extends Fragment {
         buttonSendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage(getString(R.string.please_wait));
                 progressDialog.setIndeterminate(false);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -182,7 +182,7 @@ public class SendRequestFragment extends Fragment {
                 EventBus.getDefault().post(new OnResponse());
                 String mMessage = e.getMessage().toString();
                 Log.w("failure Response", mMessage);
-                Toast.makeText(requireContext(), "Request failed", Toast.LENGTH_SHORT);
+                Toast.makeText(requireContext(), getString(R.string.req_failed), Toast.LENGTH_SHORT);
             }
 
             @Override
@@ -214,7 +214,7 @@ public class SendRequestFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
+        bundle.putString(getString(R.string.prediction1), ApplicationState.getGson().toJson(prediction));
         showPredictionFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
     }

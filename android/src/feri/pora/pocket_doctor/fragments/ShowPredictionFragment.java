@@ -43,12 +43,12 @@ public class ShowPredictionFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Request analysis");
+                .setTitle(getString(R.string.req_analysis));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         bindGUI(rootView);
         Bundle bundle = getArguments();
-        prediction = ApplicationState.getGson().fromJson(bundle.getString("prediction"),
+        prediction = ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.prediction1)),
                 Prediction.class);
         predictionTextView.setText(prediction.getPrediction());
         date.setText("Date of prediction : " + prediction.getDate());
@@ -72,7 +72,7 @@ public class ShowPredictionFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 SendDoctorList sendDoctorList = new SendDoctorList();
                 Bundle bundle = new Bundle();
-                bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
+                bundle.putString(getString(R.string.prediction1), ApplicationState.getGson().toJson(prediction));
                 sendDoctorList.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, sendDoctorList).commit();
             }

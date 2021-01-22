@@ -24,8 +24,6 @@ public class AnalysisFragment extends Fragment {
     private ViewPager2 viewPager;
     private DemoCollectionAdapter demoCollectionAdapter;
 
-    private String[] titles = new String[]{"Pending", "List"};
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         if (container != null) {
@@ -36,7 +34,7 @@ public class AnalysisFragment extends Fragment {
 
         ((UserNavigationActivity) requireActivity()).getSupportActionBar().show();
         ((UserNavigationActivity) requireActivity()).getSupportActionBar()
-                .setTitle("Analysis");
+                .setTitle(getString(R.string.analysis));
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ((UserNavigationActivity) requireActivity()).navigationView
                 .setCheckedItem(R.id.nav_list_analysis);
@@ -53,9 +51,9 @@ public class AnalysisFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if(position == 0) {
-                tab.setText("Pending");
+                tab.setText(getString(R.string.pending2));
             } else {
-                tab.setText("List");
+                tab.setText(getString(R.string.list));
             }
         }).attach();
     }
