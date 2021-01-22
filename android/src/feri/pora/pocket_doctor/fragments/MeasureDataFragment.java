@@ -180,7 +180,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     SendDoctorList sendDoctorList = new SendDoctorList();
                     Bundle bundle = new Bundle();
-                    bundle.putString(getString(R.string.measurement), ApplicationState.getGson().toJson(measureData));
+                    bundle.putString("measurement", ApplicationState.getGson().toJson(measureData));
                     sendDoctorList.setArguments(bundle);
                     fragmentManager.beginTransaction()
                             .replace(R.id.nav_host_fragment, sendDoctorList).commit();
@@ -196,7 +196,7 @@ public class MeasureDataFragment extends Fragment implements View.OnClickListene
         Bundle bundle = getArguments();
         handleMessage = new MessageHandler();
         stringBuilder = new StringBuilder();
-        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.device)),
+        connectModule.execute(ApplicationState.getGson().fromJson(bundle.getString("device"),
                 Device.class));
     }
 

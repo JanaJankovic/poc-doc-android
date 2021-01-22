@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.config.ApplicationConfig;
 
@@ -14,6 +15,7 @@ public class ApplicationState extends Application {
 
     private static Gson gson;
     public static SharedPreferences sharedPreferences;
+    public static boolean isSlovenian = false;
 
     private static User loggedUser;
 
@@ -31,7 +33,7 @@ public class ApplicationState extends Application {
     }
 
     public static boolean checkLoggedUser(){
-        if (loadLoggedUser().getId() != null) {
+        if (loadLoggedUser() != null) {
             return true;
         }
         return false;
@@ -40,9 +42,12 @@ public class ApplicationState extends Application {
     public static User loadLoggedUser() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = sharedPreferences.getString(ApplicationConfig.USER_KEY, "");
-        loggedUser = getGson().fromJson(json, User.class);
-        editor.apply();
-        return loggedUser;
+        if (json != null) {
+            loggedUser = getGson().fromJson(json, User.class);
+            editor.apply();
+            return loggedUser;
+        }
+        return null;
     }
 
     public static void saveLoggedUser(User user) {

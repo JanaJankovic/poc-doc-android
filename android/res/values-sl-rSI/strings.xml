@@ -22,7 +22,7 @@
     <string name="update">Posodobljeno!</string>
     <string name="new_name">Ime :</string>
     <string name="new_password">Geslo :</string>
-    <string name="password_hint">Novo gelso</string>
+    <string name="password_hint">Novo geslo</string>
     <string name="new_phone">Telefon :</string>
     <string name="set_settings">Spremeni</string>
     <string name="login">PRIJAVA</string>
@@ -98,4 +98,8 @@
     <string name="diagnosis3">dijagnoza</string>
     <string name="short_pass">Geslo je prekratko</string>
     <string name="pending2">Na čakanju</string>
+    <string name="chat">Klepet</string>
+    <string name="doctor4">Zdravniki</string>
+    <string name="measure">Meri</string>
+    <string name="date_precition">Datum napovedi :</string>
 </resources>

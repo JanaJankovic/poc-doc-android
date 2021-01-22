@@ -14,43 +14,43 @@
     <fragment
         android:id="@+id/nav_f_request_analysis"
         android:name="feri.pora.pocket_doctor.fragments.RequestAnalysisFragment"
-        android:label="Request analysis"
+        android:label="@string/req_analysis"
         tools:layout="@layout/fragment_request_analysis" />
 
     <fragment
         android:id="@+id/nav_f_list_analysis"
         android:name="feri.pora.pocket_doctor.fragments.AnalysisFragment"
-        android:label="List of analysis"
+        android:label="@string/list_analysis"
         tools:layout="@layout/fragment_list_analysis" />
 
     <fragment
         android:id="@+id/nav_f_oxymeter"
         android:name="feri.pora.pocket_doctor.fragments.OxymeterFragment"
-        android:label="Pulse measurement"
+        android:label="@string/pulse"
         tools:layout="@layout/fragment_oxymeter" />
 
     <fragment
         android:id="@+id/nav_f_chat"
         android:name="feri.pora.pocket_doctor.fragments.ChatFragment"
-        android:label="Chat"
+        android:label="@string/chat"
         tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/nav_f_act_therapies"
         android:name="feri.pora.pocket_doctor.fragments.TherapiesFragment"
-        android:label="Active therapies"
+        android:label="@string/active_therapies"
         tools:layout="@layout/fragment_therapies" />
 
     <fragment
         android:id="@+id/nav_f_measure_data"
         android:name="feri.pora.pocket_doctor.fragments.MeasureDataFragment"
-        android:label="Pulse measurement"
+        android:label="@string/pulse"
         tools:layout="@layout/fragment_measure_data" />
 
     <fragment
         android:id="@+id/nav_f_settings"
         android:name="feri.pora.pocket_doctor.fragments.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/action_settings"
         tools:layout="@layout/fragment_settings" />
 
 </navigation>

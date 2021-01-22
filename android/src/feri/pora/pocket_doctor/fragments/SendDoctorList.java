@@ -65,8 +65,8 @@ public class SendDoctorList extends Fragment {
         Log.i("DOCTSDS", doctors.toString());
         Bundle bundle = getArguments();
 
-        String jsonMeasure = bundle.getString(getString(R.string.measurement));
-        String jsonPrediction = bundle.getString(getString(R.string.prediction1));
+        String jsonMeasure = bundle.getString("measurement");
+        String jsonPrediction = bundle.getString("prediction");
         if (jsonMeasure == null) {
             ((UserNavigationActivity) requireActivity()).getSupportActionBar()
                     .setTitle(getString(R.string.send_prediction));

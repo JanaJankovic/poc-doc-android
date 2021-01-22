@@ -7,7 +7,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="chat">Chat</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -55,6 +55,7 @@
     <string name="list">List</string>
     <string name="analysis">Analysis</string>
     <string name="doctor2">doctor</string>
+    <string name="doctor4">Doctors</string>
     <string name="doctor3">DR. </string>
     <string name="sent">sent</string>
     <string name="error">ERROR!</string>
@@ -67,6 +68,7 @@
     <string name="req_analysis">Request analysis</string>
     <string name="available_doctors">Available doctors</string>
     <string name="log_out">Log out</string>
+    <string name="date_precition">Date of preditction : </string>
     <string name="are_you_sure">Are you sure you want to exit?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
@@ -98,4 +100,5 @@
     <string name="pending2">Pending</string>
     <string name="_0_0">0.0</string>
     <string name="sentr_mssg">SENTR MSSG</string>
+    <string name="measure">Measure</string>
 </resources>

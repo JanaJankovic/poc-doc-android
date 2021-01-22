@@ -141,7 +141,7 @@ public class OxymeterFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         MeasureDataFragment measureDataFragment = new MeasureDataFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.device), ApplicationState.getGson().toJson(event.getDevice()));
+        bundle.putString("device", ApplicationState.getGson().toJson(event.getDevice()));
         measureDataFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, measureDataFragment).commit();
     }

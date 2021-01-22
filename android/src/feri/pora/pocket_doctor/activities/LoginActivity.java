@@ -3,8 +3,11 @@ package feri.pora.pocket_doctor.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import feri.pora.datalib.Response;
 import feri.pora.datalib.User;
@@ -48,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         bindGUI();
+        setAppLocale(ApplicationState.loadLoggedUser().getLanguage());
 
         if(ApplicationState.checkLoggedUser()){
             user = ApplicationState.loadLoggedUser();
@@ -139,5 +144,13 @@ public class LoginActivity extends AppCompatActivity {
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(getBaseContext(), getString(R.string.cancelled), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setAppLocale(String localeCode) {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(new Locale(localeCode.toLowerCase()));
+        resources.updateConfiguration(config, dm);
     }
 }

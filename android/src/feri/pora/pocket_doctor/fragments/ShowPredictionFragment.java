@@ -48,10 +48,10 @@ public class ShowPredictionFragment extends Fragment {
 
         bindGUI(rootView);
         Bundle bundle = getArguments();
-        prediction = ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.prediction1)),
+        prediction = ApplicationState.getGson().fromJson(bundle.getString("prediction"),
                 Prediction.class);
         predictionTextView.setText(prediction.getPrediction());
-        date.setText("Date of prediction : " + prediction.getDate());
+        date.setText(getString(R.string.date_precition) + prediction.getDate());
         setPictureBackground(rootView, prediction.getFilePath());
 
         if (prediction.getDoctorId()!= null && !prediction.getDoctorId().equals("")){
@@ -72,7 +72,7 @@ public class ShowPredictionFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 SendDoctorList sendDoctorList = new SendDoctorList();
                 Bundle bundle = new Bundle();
-                bundle.putString(getString(R.string.prediction1), ApplicationState.getGson().toJson(prediction));
+                bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
                 sendDoctorList.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, sendDoctorList).commit();
             }

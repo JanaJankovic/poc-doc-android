@@ -44,7 +44,11 @@ public class HomeFragment extends Fragment {
     public void bindGUI(View v) {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycleViewHome);
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        homeAdapter = new HomeAdapter();
+        String titles[] = {getString(R.string.diagnosis2), getString(R.string.therapies),
+                getString(R.string.list_of_analysis), getString(R.string.request_analysis),
+                getString(R.string.pulse), getString(R.string.doctor4),
+                getString(R.string.action_settings), getString(R.string.log_out)};
+        homeAdapter = new HomeAdapter(titles);
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.setOnClickListener(new HomeAdapter.OnItemClickListener() {
             @Override

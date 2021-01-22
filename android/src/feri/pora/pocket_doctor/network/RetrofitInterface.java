@@ -2,6 +2,7 @@ package feri.pora.pocket_doctor.network;
 
 import java.util.ArrayList;
 
+import feri.pora.datalib.Analysis;
 import feri.pora.datalib.Data;
 import feri.pora.datalib.Diagnosis;
 import feri.pora.datalib.Doctor;
@@ -60,6 +61,9 @@ public interface RetrofitInterface {
 
     @POST("/blockchain/getDiagnosisPatient")
     Observable<ArrayList<Diagnosis>> getDiagnosis(@Body Data data);
+
+    @POST("/blockchain/getAnalisysPatient")
+    Observable<ArrayList<Analysis>> getAnalysis(@Body Data data);
 }
 
 

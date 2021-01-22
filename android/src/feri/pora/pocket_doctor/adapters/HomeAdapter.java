@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import feri.pora.pocket_doctor.R;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeItem> {
-    String titles[] = new String[] {"Diagnosis", "Therapies", "Analysis",
-            "Request analysis", "Pulse", "Doctors", "Settings", "Log out"};
+
     int images[] = new int[] {R.drawable.ic_medical_handbook_blue, R.drawable.ic_therapy_blue,
             R.drawable.ic_bar_chart_blue, R.drawable.ic_analytics_blue, R.drawable.ic_cardiology_blue,
             R.drawable.ic_stethoscope_doctor, R.drawable.ic_baseline_settings_24_blue,
             R.drawable.ic_baseline_exit_blue};
+    String[] titles;
 
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
@@ -29,7 +29,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeItem> {
         this.listener =  listener;
     }
 
-    public HomeAdapter() {
+    public HomeAdapter(String[] titles) {
+        this.titles = titles;
     }
 
     @NonNull

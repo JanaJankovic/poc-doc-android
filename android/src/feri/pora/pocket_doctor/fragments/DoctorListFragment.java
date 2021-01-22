@@ -94,7 +94,7 @@ public class DoctorListFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         ChatFragment chatFragment = new ChatFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.doctor2), ApplicationState.getGson().toJson(event.getDoctor()));
+        bundle.putString("doctor", ApplicationState.getGson().toJson(event.getDoctor()));
         chatFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, chatFragment).commit();
     }

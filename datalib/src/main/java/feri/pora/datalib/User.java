@@ -10,6 +10,7 @@ public class User extends Person {
     private String publicKey;
     private String medicalNumber;
     private String password;
+    private String language = "en";
     private ArrayList<Doctor> doctorList;
 
     public User(){
@@ -23,10 +24,8 @@ public class User extends Person {
         super(id, fullName, phone, "");
         this.medicalNumber = medicalNumber;
         this.password = password;
-
         this.privateKey = privateKey;
         this.publicKey = publicKey;
-
         doctorList = new ArrayList<Doctor>();
 
     }
@@ -121,17 +120,12 @@ public class User extends Person {
         this.doctorList = doctorList;
     }
 
-    public String getStatus() {
-//        for (Diagnosis diagnosis : diagnosisList) {
-//            if (diagnosis.getTherapyList().size() > 0) {
-//                for (Therapy therapy : diagnosis.getTherapyList()) {
-//                    if (therapy.getEnd() == null)
-//                        return "Undergoing therapy";
-//                }
-//            }
-//        }
+    public String getLanguage() {
+        return language;
+    }
 
-        return "Healthy";
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @Override

@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ import feri.pora.pocket_doctor.ApplicationState;
 import feri.pora.pocket_doctor.R;
 import feri.pora.pocket_doctor.activities.UserNavigationActivity;
 import feri.pora.pocket_doctor.adapters.DoctorAdapter;
+import feri.pora.pocket_doctor.events.OnLanguageChanged;
 import feri.pora.pocket_doctor.network.NetworkUtil;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,12 +65,11 @@ public class SettingsFragment extends Fragment {
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ((UserNavigationActivity) requireActivity()).navigationView
                 .setCheckedItem(R.id.nav_settings);
-       languages.add(getString(R.string.english));
-       languages.add(getString(R.string.slovenian));
-       bindGUI(rootView);
-       bindValues();
-       subscription = new CompositeSubscription();
-
+        languages.add(getString(R.string.english));
+        languages.add(getString(R.string.slovenian));
+        bindGUI(rootView);
+        bindValues();
+        subscription = new CompositeSubscription();
         return rootView;
     }
 
@@ -101,18 +103,19 @@ public class SettingsFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //change language
+                    ApplicationState.isSlovenian = position > 0;
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
             }
+
+
         });
     }
 
     private void bindValues(){
         User user = ApplicationState.loadLoggedUser();
         edtName.setHint(user.getFullName());
-        edtPassword.setHint(getString(R.string.password_hint));
         edtLocation.setHint(user.getLocation());
         edtNumber.setHint(user.getPhone());
     }
@@ -129,8 +132,11 @@ public class SettingsFragment extends Fragment {
         TextView name = (TextView) ((UserNavigationActivity)getActivity()).navigationView.getHeaderView(0)
                 .findViewById(R.id.userFullName);
         name.setText(ApplicationState.loadLoggedUser().getFullName());
+        EventBus.getDefault().post(new OnLanguageChanged(ApplicationState.isSlovenian));
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.nav_host_fragment, new SettingsFragment()).commit();
+
+
     }
 
     private void handleError(Throwable error) {

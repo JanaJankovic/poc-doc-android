@@ -214,7 +214,7 @@ public class SendRequestFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         ShowPredictionFragment showPredictionFragment = new ShowPredictionFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.prediction1), ApplicationState.getGson().toJson(prediction));
+        bundle.putString("prediction", ApplicationState.getGson().toJson(prediction));
         showPredictionFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, showPredictionFragment).commit();
     }

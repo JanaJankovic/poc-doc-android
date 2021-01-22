@@ -1,8 +1,14 @@
 package feri.pora.pocket_doctor.activities;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,8 +28,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Locale;
+
 import feri.pora.datalib.User;
 import feri.pora.pocket_doctor.R;
+import feri.pora.pocket_doctor.config.ContextUtils;
+import feri.pora.pocket_doctor.events.OnLanguageChanged;
+import feri.pora.pocket_doctor.events.OnOpenChat;
+import feri.pora.pocket_doctor.fragments.ChatFragment;
 import feri.pora.pocket_doctor.fragments.DiagnosisFragment;
 import feri.pora.pocket_doctor.fragments.SettingsFragment;
 import feri.pora.pocket_doctor.fragments.TherapiesFragment;
@@ -58,6 +75,7 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
 
         textViewUserFullname.setText(ApplicationState.loadLoggedUser().getFullName());
         textViewUserMedicalNumber.setText(ApplicationState.loadLoggedUser().getMedicalNumber());
+        Log.i("LANGUGAGEGGE", ApplicationState.loadLoggedUser().getLanguage());
 
         toolbar.setVisibility(View.GONE);
         getSupportFragmentManager().beginTransaction()
@@ -124,7 +142,6 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
                 return true;
             }
         });
-
     }
 
     public void bindGUI() {
@@ -189,6 +206,49 @@ public class UserNavigationActivity extends AppCompatActivity implements Android
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void setAppLocale(String localeCode) {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(new Locale(localeCode.toLowerCase()));
+        resources.updateConfiguration(config, dm);
+
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Locale localeToSwitchTo = new Locale(ApplicationState.loadLoggedUser().getLanguage());
+        ContextWrapper localeUpdatedContext = ContextUtils.updateLocale(newBase, localeToSwitchTo);
+        super.attachBaseContext(localeUpdatedContext);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OnLanguageChanged event) {
+        User user = ApplicationState.loadLoggedUser();
+        if(event.isSlovenian()){
+            setAppLocale("sl");
+            user.setLanguage("sl");
+        } else {
+            setAppLocale("en");
+            user.setLanguage("en");
+        }
+        ApplicationState.saveLoggedUser(user);
     }
 
 }

@@ -64,7 +64,7 @@ public class ChatFragment extends Fragment {
                 R.layout.fragment_chat, null);
 
         Bundle bundle = getArguments();
-        doctor = ApplicationState.getGson().fromJson(bundle.getString(getString(R.string.doctor2)),
+        doctor = ApplicationState.getGson().fromJson(bundle.getString("doctor"),
                 Doctor.class);
         String fullName[] = doctor.getFullName().split(" ");
         String title = getString(R.string.doctor3) + fullName[fullName.length - 1];

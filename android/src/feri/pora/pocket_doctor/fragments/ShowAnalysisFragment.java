@@ -12,8 +12,6 @@ import feri.pora.pocket_doctor.R;
 
 public class ShowAnalysisFragment extends Fragment {
 
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         if (container != null) {

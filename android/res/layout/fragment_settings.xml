@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="@string/password_hint"
         app:layout_constraintStart_toStartOf="@+id/edtLocation"
         app:layout_constraintTop_toTopOf="@+id/guideline35" />
 
