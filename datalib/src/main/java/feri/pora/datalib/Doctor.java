@@ -3,11 +3,14 @@ package feri.pora.datalib;
 public class Doctor extends Person {
     private String publicKey;
     private String email;
+    private String privateKey;
 
-    public Doctor(String publicKey, String fullName, String phone, String location, String email, String id) {
+    public Doctor(String publicKey, String fullName, String phone, String location, String email,
+                  String id, String privateKey) {
         super(id, fullName, phone, location);
         this.email = email;
         this.publicKey = publicKey;
+        this.privateKey = privateKey;
     }
 
     public String getPublicKey() {
@@ -48,6 +51,14 @@ public class Doctor extends Person {
 
     public String GetId() { return  this.id; }
 
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
+
     @Override
     public String toString() {
         return "Doctor{" +
@@ -58,5 +69,9 @@ public class Doctor extends Person {
                 ", phone='" + phone + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 }

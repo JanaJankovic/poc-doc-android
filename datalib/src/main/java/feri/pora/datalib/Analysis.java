@@ -1,17 +1,37 @@
 package feri.pora.datalib;
 
 import java.util.ArrayList;
-import java.util.Base64;
 
 public class Analysis {
     private String id;
-    private String name;
-    private Base64 image;
+    private String doctorPublicKey;
+    private String patientPublicKey;
+    private String base64AsciiImageString;
+    private String description;
+    private String title;
+    private String diagnosisId;
+    private String timestamp;
 
-    public Analysis(String id, String name, Base64 image) {
+    public Analysis(String id, String doctorPrivateKey, String patientPublicKey,
+                    String analisysBase64AsciiImageString,
+                    String analisysDescription, String analisysTitle, String diagnosisId,
+                    String timestamp) {
         this.id = id;
-        this.name = name;
-        this.image = image;
+        this.doctorPublicKey = doctorPrivateKey;
+        this.patientPublicKey = patientPublicKey;
+        this.base64AsciiImageString = analisysBase64AsciiImageString;
+        this.description = analisysDescription;
+        this.title = analisysTitle;
+        this.diagnosisId = diagnosisId;
+        this.timestamp = timestamp;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -22,27 +42,59 @@ public class Analysis {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDoctorPublicKey() {
+        return doctorPublicKey;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDoctorPublicKey(String doctorPublicKey) {
+        this.doctorPublicKey = doctorPublicKey;
     }
 
-    public Base64 getImage() {
-        return image;
+    public String getPatientPublicKey() {
+        return patientPublicKey;
     }
 
-    public void setImage(Base64 image) {
-        this.image = image;
+    public void setPatientPublicKey(String patientPublicKey) {
+        this.patientPublicKey = patientPublicKey;
     }
 
-    public Diagnosis getDiagnosis(ArrayList<Diagnosis> diagnoses){
-        if (diagnoses != null)
-            for(Diagnosis diagnosis : diagnoses) {
-                if(diagnosis.getIdAnalysis().equals(id)){
-                    return diagnosis;
+    public String getBase64AsciiImageString() {
+        return base64AsciiImageString;
+    }
+
+    public void setBase64AsciiImageString(String base64AsciiImageString) {
+        this.base64AsciiImageString = base64AsciiImageString;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDiagnosisId() {
+        return diagnosisId;
+    }
+
+    public void setDiagnosisId(String diagnosisId) {
+        this.diagnosisId = diagnosisId;
+    }
+
+    public Doctor getDoctor(ArrayList<Doctor> doctors){
+        if (doctors != null)
+            for(Doctor doctor : doctors) {
+                if(doctor.getPublicKey().equals(doctorPublicKey) || doctor.getPrivateKey().equals(doctorPublicKey)){
+                    return doctor;
                 }
             }
         return null;

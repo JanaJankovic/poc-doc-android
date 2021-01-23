@@ -21,11 +21,9 @@ import feri.pora.pocket_doctor.events.OnAnalysisShow;
 public class AnalysisAdapter extends RecyclerView.Adapter <AnalysisAdapter.AnalysisItem> {
 
     private ArrayList<Analysis> analyses;
-    private ArrayList<Diagnosis> diagnoses;
 
-    public AnalysisAdapter(ArrayList<Analysis> analyses,  ArrayList<Diagnosis> diagnoses) {
+    public AnalysisAdapter(ArrayList<Analysis> analyses) {
         this.analyses = analyses;
-        this.diagnoses = diagnoses;
     }
 
     @NonNull
@@ -39,7 +37,7 @@ public class AnalysisAdapter extends RecyclerView.Adapter <AnalysisAdapter.Analy
 
     @Override
     public void onBindViewHolder(@NonNull  AnalysisAdapter.AnalysisItem holder, int position) {
-        holder.bindItemsToData(analyses.get(position), diagnoses);
+        holder.bindItemsToData(analyses.get(position));
     }
 
     @Override
@@ -63,17 +61,13 @@ public class AnalysisAdapter extends RecyclerView.Adapter <AnalysisAdapter.Analy
             buttonShowAnalysis = (Button) v.findViewById(R.id.buttonShowConfirmedAnalysis);
         }
 
-        public void bindItemsToData(Analysis analysis, ArrayList<Diagnosis> diagnoses) {
-            title.setText(analysis.getName());
-            Diagnosis diagnosis = analysis.getDiagnosis(diagnoses);
-            if (diagnosis != null)
-                subtitle.setText(diagnosis.getName());
-            else
-                subtitle.setText("No diagnosis");
+        public void bindItemsToData(Analysis analysis) {
+            title.setText(analysis.getTitle());
+            subtitle.setText(analysis.getDescription());
             buttonShowAnalysis.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new OnAnalysisShow(analysis, diagnosis));
+                    EventBus.getDefault().post(new OnAnalysisShow(analysis));
                 }
             });
         }

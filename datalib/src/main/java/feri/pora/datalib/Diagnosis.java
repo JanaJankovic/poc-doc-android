@@ -8,7 +8,6 @@ public class Diagnosis {
     private String description;
     private String doctorId;
     private String timestamp;
-    private String  idAnalysis;
 
     public Diagnosis(String id, String name, String description, String doctorId,
                      String timestamp) {
@@ -65,14 +64,6 @@ public class Diagnosis {
                 return doctor.getFullName();
         }
         return "Unknown doctor";
-    }
-
-    public String getIdAnalysis() {
-        return idAnalysis;
-    }
-
-    public void setIdAnalysis(String idAnalysis) {
-        this.idAnalysis = idAnalysis;
     }
 
     @Override

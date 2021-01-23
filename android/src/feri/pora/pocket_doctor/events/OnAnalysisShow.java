@@ -5,11 +5,9 @@ import feri.pora.datalib.Diagnosis;
 
 public class OnAnalysisShow {
     private Analysis analysis;
-    private Diagnosis diagnosis;
 
-    public OnAnalysisShow(Analysis analysis, Diagnosis diagnosis) {
+    public OnAnalysisShow(Analysis analysis) {
         this.analysis = analysis;
-        this.diagnosis = diagnosis;
     }
 
     public Analysis getAnalysis() {
@@ -20,11 +18,4 @@ public class OnAnalysisShow {
         this.analysis = analysis;
     }
 
-    public Diagnosis getDiagnosis() {
-        return diagnosis;
-    }
-
-    public void setDiagnosis(Diagnosis diagnosis) {
-        this.diagnosis = diagnosis;
-    }
 }
