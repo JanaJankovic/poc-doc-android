@@ -32,7 +32,8 @@ You can see whole presention [here](https://univerzamb-my.sharepoint.com/:p:/g/p
 
 ## Setup
 Download code and install it on your phone using Android Studio.</br>
-In package `config` change IP with the one you get from `ipconfig` and make sure your phone is in the same network.
+In package `config` change IP with the one you get from `ipconfig` and make sure your phone is in the same network.</br>
+Make sure you have paired with bluetooth module from before using it in app.
 
 ## Structure
 Packages :
