@@ -20,6 +20,8 @@ Pocket Doctor is an app intented to simulate the usage of blockchain in a health
 * [Arduino](https://github.com/JanaJankovic/poc-doc-arduino)
 * [Recognition](https://github.com/JanaJankovic/poc-doc-recognition)
 
+You can see whole presention [here](https://univerzamb-my.sharepoint.com/:p:/g/personal/jana_jankovic_student_um_si/ETQo1_cbyKlDnSKktxM6_YABnMsRZP8nEeGqBBbXq_wHtg?e=2ceRYw)
+
 ## Screenshots
 ![Example screenshot](./img/screenshot.png)
 
@@ -33,8 +35,17 @@ Download code and install it on your phone using Android Studio.</br>
 In package `config` change IP with the one you get from `ipconfig` and make sure your phone is in the same network.
 
 ## Structure
-Show examples of usage:
-`put-your-code-here`
+Packages :
+* `activities`
+* `fragments`
+* `events` - all events in event bus
+* `adapters` - all adapters for `RecyclerView`
+* `network` - network utils for communicating with blockchain and backend
+* `config` - configuration settings
+
+Modules :
+* `datalib` - data structure
+* `core` - libgdx for displaying realtime graph
 
 ## Features
 Pocket-Doctor application has next features :
