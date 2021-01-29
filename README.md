@@ -67,8 +67,10 @@ Created by [Jana Jankovic](https://github.com/JanaJankovic) - feel free to conta
 * jana.jankovic@student.um.si
 * jana.j00@outlook.com
 * jana.jankovic.feri@gmail.com
-</br>Supported by [Goran Petrovic](https://github.com/PetrovicGoran) - feel free to contact him :
+
+Supported by [Goran Petrovic](https://github.com/PetrovicGoran) - feel free to contact him :
 * goran.petrovic1@student.um.si
-</br>Suppored by [Nikola Vilar Jordanovski](https://github.com/NikolaVilar) - feel free to contact him :
+
+Suppored by [Nikola Vilar Jordanovski](https://github.com/NikolaVilar) - feel free to contact him :
 * nikola.vialr@student.um.si
 
