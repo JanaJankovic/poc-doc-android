@@ -1,4 +1,4 @@
-# Project Name
+# Pocket-Doctor Android
 > This repository is patient-oriented part of the project. Here you can find all information about the idea and the structure of android application. 
 
 ## Table of contents
